@@ -1,0 +1,236 @@
+/* --- 1. Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap');
+
+/* --- 2. Genel Ayarlar --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: #0e0e0e url('/images/arkaplan.png') no-repeat center top fixed;
+    background-size: cover;
+}
+
+h1, h2, h3, h4, .playfair {
+    font-family: 'Playfair Display', serif;
+}
+
+a {
+    transition: 0.3s all ease;
+    text-decoration: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- 3. Cam Panel Yapısı (Tüm Sayfalar İçin) --- */
+.section-glass-panel {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 60px 50px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+    margin-top: -50px !important; /* Hero ile birleşme efekti */
+    position: relative;
+    z-index: 5;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.7;
+    border-left: 3px solid #8B261D;
+    padding-left: 20px;
+    margin-bottom: 50px;
+}
+
+/* --- 4. Hero Alanı (Hizalama Düzeltildi) --- */
+.hero-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 0 !important;
+}
+
+.hero-artist-col {
+    display: flex;
+    align-items: flex-end;
+    /* Resmi sütunun soluna yasladık, böylece içerik paneliyle hizalanır */
+    justify-content: flex-start;
+    position: relative;
+    height: 70vh;
+}
+
+.img-hero-artist {
+    max-height: 80vh;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: -1px;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+    z-index: 2;
+    /* Geniş ekranlarda sola fazla kaçmaması için başlangıç noktasını korur */
+    transform: translateX(0);
+}
+
+.main-title {
+    font-size: 3.5rem;
+    color: #fff;
+    line-height: 1.1;
+}
+
+/* --- 5. Kartlar ve Görseller --- */
+.music-card {
+    max-width: 150px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px;
+    transition: 0.3s;
+}
+
+    .music-card:hover {
+        transform: translateY(-10px);
+        border-color: #8B261D;
+    }
+
+.album-cover {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.book-3d {
+    max-width: 240px;
+    width: 100%;
+    transition: 0.6s;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+}
+
+    .book-3d:hover {
+        transform: translateY(-10px) rotateY(-5deg);
+        filter: brightness(1.1);
+    }
+
+/* --- 6. Form, Butonlar ve Sosyal Medya --- */
+.glass-input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border-radius: 0;
+    padding: 12px;
+    font-size: 0.8rem;
+}
+
+    .glass-input:focus {
+        border-color: #8B261D !important;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+
+.btn-custom-red {
+    background-color: #8B261D;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 12px 35px;
+    border-radius: 0;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.btn-custom-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.7) !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 25px;
+    border-radius: 0;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+    .btn-custom-outline:hover {
+        border-color: #8B261D;
+        color: #fff !important;
+        background: rgba(255,255,255,0.05);
+    }
+
+.social-icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+    .social-icon-box i {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        transition: 0.5s;
+    }
+
+    .social-icon-box:hover {
+        color: #fff;
+        transform: translateY(-10px);
+    }
+
+        .social-icon-box:hover i {
+            color: #8B261D;
+            filter: drop-shadow(0 0 15px rgba(139, 38, 29, 0.5));
+        }
+
+.letter-spacing-2 {
+    letter-spacing: 2px;
+}
+
+.hover-red:hover {
+    color: #8B261D !important;
+}
+
+/* --- 7. Responsive Ayarlar --- */
+@media (min-width: 768px) {
+    .v-line {
+        border-right: 1px solid rgba(255,255,255,0.08);
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-glass-panel {
+        padding: 30px 20px;
+    }
+
+    .hero-container {
+        display: block;
+        min-height: auto;
+    }
+
+    .img-hero-artist {
+        max-height: 45vh;
+        margin: 0 auto;
+        display: block;
+    }
+}
+/* Açılır menü (select) ve içindeki seçenekler (option) için renk düzeltmesi */
+.glass-input option {
+    background-color: #1a1a1a !important; /* Listenin arka planını koyulaştır */
+    color: #ffffff !important; /* Yazıları her zaman beyaz yap */
+    padding: 10px;
+}
+
+/* Bazı tarayıcılar (Chrome/Edge) için select kutusunun genel yazı rengi */
+select.glass-input {
+    color: #ffffff !important;
+    appearance: none; /* Varsayılan tarayıcı okunu temizlemek istersen (isteğe bağlı) */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+}

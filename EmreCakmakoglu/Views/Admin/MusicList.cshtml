@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Music>
+@{
+    ViewData["Title"] = "Müzik Yönetimi";
+}
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
+<div class="container mt-5 pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white border-start border-danger border-4 ps-3">Müzik Yönetimi</h2>
+        <a href="/Admin/MusicCreate" class="btn btn-danger shadow-sm">+ Yeni Müzik Ekle</a>
+    </div>
+
+    <div class="card bg-dark border-secondary shadow">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0 border-secondary">
+                <thead>
+                    <tr class="text-secondary">
+                        <th style="width: 80px;">Kapak</th>
+                        <th>Başlık</th>
+                        <th>Yıl</th>
+                        <th class="text-end">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="align-middle">
+                            <td>
+                                <img src="@item.ImageUrl" class="rounded shadow-sm" style="width:50px; height:50px; object-fit:cover; border: 1px solid #333;">
+                            </td>
+                            <td class="fw-bold">@item.Title</td>
+                            <td><span class="badge bg-secondary">@item.Year</span></td>
+                            <td class="text-end">
+                                <a href="/Admin/MusicEdit/@item.Id" class="btn btn-sm btn-outline-warning me-2">
+                                    <i class="bi bi-pencil"></i> Düzenle
+                                </a>
+                                
+                                <a href="/Admin/MusicDelete/@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('@item.Title şarkısını silmek istediğinize emin misiniz?')">
+                                    <i class="bi bi-trash"></i> Sil
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/Admin/Index" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Panele Geri Dön
+        </a>
+    </div>
+</div>
+
+<style>
+    /* Tablo satırlarına gelince hafif parlatma efekti */
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        transition: 0.3s;
+    }
+    .table thead th {
+        border-bottom: 2px solid #444;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+</style>

@@ -1,0 +1,62 @@
+﻿@model EmreCakmakoglu.Models.Music
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6 card bg-dark text-white p-4 border-secondary">
+            <div class="mb-4">
+                <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+                    <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+                </a>
+            </div>
+            <h3 class="mb-4">Yeni Müzik Ekle</h3>
+            <form asp-action="MusicCreate" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Şarkı/Albüm Adı</label>
+                    <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Yayın Yılı</label>
+                        <input asp-for="Year" class="form-control bg-dark text-white border-secondary" required>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">Albüm Kapağı Seç</label>
+                            <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary" accept="image/*" required>
+                            <small class="text-muted">Kare görseller en iyi sonucu verir.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şarkı Sözleri / Detay</label>
+                            <textarea name="Description" class="form-control bg-dark text-white border-secondary" rows="6" placeholder="Şarkı sözlerini veya hikayesini buraya yazın..."></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Spotify Linki (Opsiyonel)</label>
+                            <input asp-for="SpotifyUrl" class="form-control bg-dark text-white border-secondary">
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100">Kaydet ve Yayınla</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+
+            <script>
+                // Sayfadaki tüm textarea'ları otomatik olarak CKEditor'e çevirir
+                document.querySelectorAll('textarea').forEach(textarea => {
+                ClassicEditor
+                .create(textarea, {
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ],
+                // Karanlık tema uyumu için küçük bir CSS müdahalesi gerekebilir
+                })
+                .catch(error => {
+                console.error(error);
+                });
+                });
+            </script>
+
+            <style>
+                /* CKEditor'ün beyaz arka planını karanlık temaya uyduralım */
+                .ck-editor__editable {
+                min-height: 300px;
+                color: black !important; /* Yazı yazarken görünmesi için */
+                }
+            </style>

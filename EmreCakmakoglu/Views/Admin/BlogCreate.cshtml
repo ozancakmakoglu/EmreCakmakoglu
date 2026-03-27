@@ -1,0 +1,57 @@
+﻿@model BlogPost
+@{
+    Layout = "_Layout";
+}
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
+<div class="container mt-5 pt-4">
+    <div class="card bg-dark text-white p-4 border-secondary">
+        <h3>Yeni Blog Yazısı</h3>
+        <form asp-action="BlogCreate" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label>Başlık</label>
+                <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
+                </div>
+                <div class="mb-3">
+                    <label>Kısa Özet (Ana Sayfa İçin)</label>
+                    <input asp-for="Summary" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="mb-3">
+                        <label>Kapak Görseli</label>
+                        <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary">
+                    </div>
+                    <div class="mb-3">
+                        <label>İçerik</label>
+                        <textarea asp-for="Content" id="editor"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100">Yazıyı Yayınla</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+
+        <script>
+            // Sayfadaki tüm textarea'ları otomatik olarak CKEditor'e çevirir
+            document.querySelectorAll('textarea').forEach(textarea => {
+            ClassicEditor
+            .create(textarea, {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ],
+            // Karanlık tema uyumu için küçük bir CSS müdahalesi gerekebilir
+            })
+            .catch(error => {
+            console.error(error);
+            });
+            });
+        </script>
+
+        <style>
+            /* CKEditor'ün beyaz arka planını karanlık temaya uyduralım */
+            .ck-editor__editable {
+            min-height: 300px;
+            color: black !important; /* Yazı yazarken görünmesi için */
+            }
+        </style>

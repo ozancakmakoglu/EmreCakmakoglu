@@ -1,0 +1,77 @@
+﻿@model EmreCakmakoglu.Models.Music
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Müzik Düzenle";
+}
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card bg-dark text-white p-4 border-secondary shadow">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Müzik Düzenle</h3>
+                    <a href="/Admin/MusicList" class="btn btn-outline-secondary btn-sm">Listeye Dön</a>
+                </div>
+
+                <form asp-action="MusicEdit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageUrl" />
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label class="form-label">Şarkı/Albüm Adı</label>
+                                <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">Yayın Yılı</label>
+                                    <input asp-for="Year" class="form-control bg-dark text-white border-secondary" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label d-block">Mevcut Kapak</label>
+                                <img src="@Model.ImageUrl" class="img-thumbnail mb-2" style="height: 100px; width: 100px; object-fit: cover;">
+                                <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Spotify URL</label>
+                                <input asp-for="SpotifyUrl" class="form-control bg-dark text-white border-secondary">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Şarkı Sözleri / Açıklama</label>
+                                    @* ID'nin unique (benzersiz) olduğundan emin olalım *@
+                                    <textarea asp-for="Description" id="musicEditor"></textarea>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-warning fw-bold text-dark">Değişiklikleri Kaydet</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor
+                .create(document.querySelector('#musicEditor'))
+                .catch(error => { console.error(error); });
+            </script>
+
+            <style>
+                .ck-editor__editable {
+                min-height: 300px;
+                color: #000 !important;
+                }
+            </style>

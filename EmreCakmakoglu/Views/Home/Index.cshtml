@@ -1,0 +1,166 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Music>
+@{
+    // Paketi açıyoruz ve 'set' isimli bir değişkene aktarıyoruz
+    var set = (EmreCakmakoglu.Models.SiteSettings)ViewBag.Settings;
+}
+@* --- HERO --- *@
+<div class="hero-container">
+    <div class="container h-100">
+        <div class="row h-100 align-items-stretch justify-content-center">
+            <div class="col-md-5 hero-artist-col order-2 order-md-1">
+                <img src="@(set?.HeroImageUrl ?? "/images/ana-gorsel-saydam.png")" class="img-hero-artist">
+            </div>
+            <div class="col-md-6 d-flex align-items-center order-1 order-md-2 pb-5" style="z-index:10; position:relative;">
+                <div class="text-center text-md-start ps-md-4">
+                    <h1 class="main-title mb-0">Emre Çakmakoğlu</h1>
+                    <p class="subtitle italic fs-3 mb-4 text-white-50">Müzisyen - Yazar</p>
+                    <div class="d-flex gap-3 justify-content-md-start justify-content-center">
+                        <a href="#muzikler" class="btn btn-custom-outline">MÜZİKLER</a>
+                        <a href="#yazilar" class="btn btn-custom-outline">BLOG YAZILARI</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- MÜZİKLER --- *@
+<section id="muzikler" class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 section-glass-panel">
+            <h3 class="section-title">MÜZİKLERİM</h3>
+            <div class="row row-cols-2 row-cols-md-6 g-4 justify-content-center">
+                @foreach (var item in Model)
+                {
+                    <div class="col text-center">
+                        <a href="@Url.Action("MusicDetail", "Home", new { id = item.Id })">
+                            <div class="music-card mb-2"><img src="@item.ImageUrl" class="album-cover"></div>
+                            <h6 class="text-white small fw-bold text-truncate">@item.Title</h6>
+                            <small class="text-muted">@item.Year</small>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="text-center mt-5">
+                <a asp-action="Music" class="text-white-50 small letter-spacing-2 text-decoration-none hover-red">— TÜM ARŞİVİ İNCELE —</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* --- KİTAP & BLOG --- *@
+<section id="yazilar" class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 section-glass-panel">
+            <div class="row g-5">
+                <div class="col-md-5 v-line text-center">
+                    <h3 class="section-title text-start">YENİ ROMANIM</h3>
+                    @if (ViewBag.LatestBook != null)
+                    {
+                        var book = (EmreCakmakoglu.Models.Book)ViewBag.LatestBook;
+        
+                        @* Kitap Görseli *@
+                        <a href="@Url.Action("BookDetail", "Home", new { id = book.Id })">
+                            <img src="@book.ImageUrl" class="img-fluid book-3d mb-4" alt="@book.Title">
+                        </a>
+
+                        <h4 class="text-white playfair">@book.Title</h4>
+        
+                        @* DEĞİŞİKLİK BURADA: Satın Al yerine Detay Butonu *@
+                        <a href="@Url.Action("BookDetail", "Home", new { id = book.Id })" class="btn btn-custom-red btn-sm w-75 mt-2">
+                            DETAY
+                        </a>
+                    }
+                </div>
+                <div class="col-md-7">
+                    <h3 class="section-title">BLOG YAZILARI</h3>
+                    @foreach (var post in (IEnumerable<EmreCakmakoglu.Models.BlogPost>)ViewBag.Blogs)
+                    {
+                        <div class="blog-item py-3 border-bottom border-secondary border-opacity-10">
+                            <a href="@Url.Action("BlogDetail", "Home", new { id = post.Id })" class="row align-items-center g-3">
+                                <div class="col-3 col-md-2"><img src="@post.ImageUrl" class="img-fluid rounded-1"></div>
+                                <div class="col-9 col-md-10">
+                                    <h6 class="text-white mb-0 fw-normal">@post.Title</h6>
+                                    <small class="text-danger opacity-75">@post.CreatedDate.ToString("dd MMM yyyy")</small>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    <div class="text-end mt-4">
+                        <a asp-action="Blog" class="text-white-50 small letter-spacing-2">TÜM YAZILARI GÖR →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* --- BENİ TAKİP EDİN --- *@
+@* --- MEDYA & SOSYAL DUVAR --- *@
+@* --- MEDYA & SOSYAL DUVAR --- *@
+<section id="medya" class="container mt-5 mb-5">
+    <div class="row g-4">
+        
+        @* SOL: Öne Çıkan Video (Yönetilebilir) *@
+        <div class="col-lg-7">
+            <div class="section-glass-panel h-100 p-4">
+                <h3 class="section-title mb-4">ÖNE ÇIKAN VİDEO</h3>
+                <div class="ratio ratio-16x9 shadow-lg border border-secondary border-opacity-10">
+                    <iframe src="https://www.youtube.com/embed/@(set?.YoutubeVideoId ?? "VqnQmjfkr_4")"
+                            allowfullscreen
+                            style="border:0;"></iframe>
+                </div>
+            </div>
+        </div>
+
+        @* SAĞ: Spotify Akışı *@
+        <div class="col-lg-5">
+            <div class="section-glass-panel h-100 p-4">
+                <h3 class="section-title mb-4">SPOTIFY</h3>
+                <iframe src="@(set?.SpotifyEmbedUrl ?? "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBMmP")"
+                        width="100%"
+                        height="380"
+                        frameBorder="0"
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                        style="border-radius:12px;"></iframe>
+            </div>
+        </div>
+
+        @* ALT: Sosyal Medya İkonları (Sadece dolu olanlar görünür) *@
+        <div class="col-12">
+            <div class="section-glass-panel py-5">
+                <div class="d-flex justify-content-around align-items-center flex-wrap gap-4">
+            
+                    @if (!string.IsNullOrEmpty(set?.InstagramUrl))
+                    {
+                        <a href="@set.InstagramUrl" target="_blank" class="social-icon-box">
+                            <i class="bi bi-instagram"></i><span>Instagram</span>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(set?.YoutubeChannelUrl))
+                    {
+                        <a href="@set.YoutubeChannelUrl" target="_blank" class="social-icon-box">
+                            <i class="bi bi-youtube"></i><span>YouTube</span>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(set?.SpotifyArtistUrl))
+                    {
+                        <a href="@set.SpotifyArtistUrl" target="_blank" class="social-icon-box">
+                            <i class="bi bi-spotify"></i><span>Spotify</span>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(set?.TwitterUrl))
+                    {
+                        <a href="@set.TwitterUrl" target="_blank" class="social-icon-box">
+                            <i class="bi bi-twitter-x"></i><span>Twitter</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

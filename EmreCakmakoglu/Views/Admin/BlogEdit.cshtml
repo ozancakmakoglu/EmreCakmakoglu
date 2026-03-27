@@ -1,0 +1,83 @@
+﻿@model EmreCakmakoglu.Models.BlogPost
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Blog Yazısını Düzenle";
+}
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card bg-dark text-white p-4 border-secondary shadow">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>Blog Yazısını Düzenle</h3>
+                    <a href="/Admin/BlogList" class="btn btn-outline-secondary btn-sm">Listeye Dön</a>
+                </div>
+
+                <form asp-action="BlogEdit" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageUrl" /> @* Mevcut resmi korumak için *@
+
+                    <div class="mb-3">
+                        <label class="form-label">Yazı Başlığı</label>
+                        <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Kısa Özet (Ana sayfada görünen kısım)</label>
+                            <textarea asp-for="Summary" class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label d-block">Mevcut Görsel</label>
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <img src="@Model.ImageUrl" class="img-thumbnail mb-2" style="height: 100px; object-fit: cover;">
+                            }
+                            <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary">
+                            <small class="text-muted">Yeni bir görsel seçmezseniz mevcut görsel korunur.</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Yazı İçeriği</label>
+                            <textarea asp-for="Content" id="blogEditor"></textarea>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-warning fw-bold">Değişiklikleri Kaydet ve Yayınla</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* CKEditor 5 Entegrasyonu *@
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+        .create(document.querySelector('#blogEditor'), {
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'undo', 'redo' ],
+        })
+        .catch(error => {
+        console.error(error);
+        });
+    </script>
+
+    <style>
+        /* Editörün içindeki yazıların görünmesi için beyaz zemin siyah metin kuralı */
+        .ck-editor__editable {
+        min-height: 400px;
+        color: #000 !important;
+        }
+        /* Form elemanlarının odaklanma (focus) renklerini kırmızıya uyduralım */
+        .form-control:focus {
+        background-color: #1a1a1a;
+        color: white;
+        border-color: #8B261D;
+        box-shadow: none;
+        }
+    </style>

@@ -1,0 +1,26 @@
+﻿<div class="container" style="margin-top: 120px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 section-glass-panel p-5">
+            <h3 class="section-title">İLETİŞİM</h3>
+            <form asp-action="SendMessage" method="post" class="mt-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <input type="text" name="FullName" placeholder="ADINIZ SOYADINIZ" class="form-control glass-input" required>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="email" name="Email" placeholder="E-POSTA" class="form-control glass-input" required>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" name="Subject" placeholder="KONU" class="form-control glass-input" required>
+                    </div>
+                    <div class="col-12">
+                        <textarea name="MessageBody" rows="5" placeholder="MESAJINIZ" class="form-control glass-input" required></textarea>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-custom-red px-5">GÖNDER</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

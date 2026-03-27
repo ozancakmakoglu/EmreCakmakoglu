@@ -1,0 +1,20 @@
+﻿@model EmreCakmakoglu.Models.BlogPost
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 text-white mb-3">@Model.Title</h1>
+            <p class="text-muted border-bottom pb-3">@Model.CreatedDate.ToString("dd MMMM yyyy")</p>
+            
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="img-fluid rounded mb-4 shadow" style="width:100%; max-height:400px; object-fit:cover;">
+            }
+
+            <div class="blog-content text-white-50 fs-5" style="line-height:1.8;">
+                @Html.Raw(Model.Content) @* WYSIWYG editörden gelen HTML'i düzgün basar *@
+            </div>
+            
+            <a href="/" class="btn btn-outline-danger mt-5">← Geri Dön</a>
+        </div>
+    </div>
+</div>

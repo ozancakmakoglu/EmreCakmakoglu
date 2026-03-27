@@ -1,0 +1,114 @@
+﻿@model EmreCakmakoglu.Models.SiteSettings
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Genel Ayarlar";
+}
+
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
+
+<div class="container" style="margin-top: 120px; margin-bottom: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 section-glass-panel shadow-lg">
+            
+            <h3 class="section-title">SİTE AYARLARI</h3>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success bg-success text-white border-0 small mb-4">
+                    @TempData["Success"]
+                </div>
+            }
+
+            @* --- 1. FORM: GENEL AYARLAR VE MEDYA --- *@
+            <form asp-controller="Admin" asp-action="Settings" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
+                @* Tema Seçimi *@
+                <div class="col-md-12 mb-5 pb-4 border-bottom border-secondary border-opacity-10">
+                    <label class="small text-white-50 mb-2 d-block">SİTE TEMASI SEÇİMİ</label>
+                    <select asp-for="ActiveTheme" class="form-control glass-input">
+                        <option value="site.css">Tema 1: Karanlık & Pus</option>
+                        <option value="site2.css">Tema 2: Minimal & Aydınlık</option>
+                        <option value="site3.css">Tema 3: Prestij & Koyu</option>
+                        <option value="site4.css">Tema 4: Sade & Aydınlık</option>
+                    </select>
+                    <p class="small text-muted mt-2">Temayı değiştirdiğinizde sitenin havası anında güncellenir.</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 text-danger small letter-spacing-2">MEDYA YÖNETİMİ</div>
+                    <div class="col-md-6 text-md-end text-muted small italic">Klibini ve playlistini buradan değiştir.</div>
+
+                    <div class="col-md-6">
+                        <label class="small text-white-50 mb-2 d-block">YouTube Video ID</label>
+                        <input asp-for="YoutubeVideoId" class="form-control glass-input" placeholder="VqnQmjfkr_4">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="small text-white-50 mb-2 d-block">Spotify Embed Linki</label>
+                            <input asp-for="SpotifyEmbedUrl" class="form-control glass-input">
+                            </div>
+
+                            <div class="col-12 mt-4 text-danger small letter-spacing-2">SOSYAL MEDYA LİNKLERİ</div>
+
+                            <div class="col-md-6">
+                                <label class="small text-white-50 mb-1 d-block">Instagram</label>
+                                <input asp-for="InstagramUrl" class="form-control glass-input">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="small text-white-50 mb-1 d-block">Twitter (X)</label>
+                                    <input asp-for="TwitterUrl" class="form-control glass-input">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="small text-white-50 mb-1 d-block">YouTube Kanal</label>
+                                        <input asp-for="YoutubeChannelUrl" class="form-control glass-input">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label class="small text-white-50 mb-1 d-block">Spotify Sanatçı</label>
+                                            <input asp-for="SpotifyArtistUrl" class="form-control glass-input">
+                                            </div>
+
+                                            @* Görsel Yükleme *@
+                                            <div class="col-12 mt-5">
+                                                <div class="text-danger small letter-spacing-2 mb-3">SANATÇI ANA GÖRSELİ (HERO)</div>
+                                                <div class="row g-4 align-items-center p-3 border border-secondary border-opacity-10" style="background: rgba(255,255,255,0.02); border-radius:4px;">
+                                                    <div class="col-md-4 text-center">
+                                                        <img src="@(Model?.HeroImageUrl ?? "/images/ana-gorsel-saydam.png")" class="img-fluid" style="max-height: 120px;">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label class="small text-white-50 mb-2">Yeni Görsel Yükle (Saydam PNG)</label>
+                                                        <input type="file" name="heroImageFile" class="form-control glass-input" accept=".png">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-end mt-5 pt-4 border-top border-secondary border-opacity-10">
+                                                <button type="submit" class="btn btn-custom-red px-5 py-2">DEĞİŞİKLİKLERİ KAYDET</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    @* --- 2. FORM: ŞİFRE GÜNCELLEME (Tamamen Ayrı) --- *@
+                                    <div class="mt-5 pt-5 border-top border-secondary border-opacity-10">
+                                        <h5 class="text-danger playfair mb-3">GÜVENLİK AYARLARI</h5>
+                                        <form asp-controller="Admin" asp-action="ChangePassword" method="post" class="row g-3 align-items-end">
+                                            <div class="col-md-7">
+                                                <label class="small text-white-50 mb-2 d-block">Yeni Yönetici Şifresi</label>
+                                                <input type="password" name="newPassword" class="form-control glass-input" placeholder="Yeni şifreyi yazın..." required>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button type="submit" class="btn btn-outline-danger w-100 py-2">ŞİFREYİ GÜNCELLE</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>

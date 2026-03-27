@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Book>
+@{
+    ViewData["Title"] = "Kitaplar";
+}
+
+<div class="container" style="margin-top: 120px; margin-bottom: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 section-glass-panel shadow-lg text-center">
+            <h3 class="section-title text-start">TÜM KİTAPLARIM</h3>
+            
+            <div class="row row-cols-1 row-cols-md-3 g-5 justify-content-center mt-4">
+                @foreach (var book in Model)
+                {
+                    <div class="col">
+                        <div class="book-item-container">
+                            <a href="@Url.Action("BookDetail", "Home", new { id = book.Id })">
+                                <img src="@book.ImageUrl" class="img-fluid book-3d mb-4" alt="@book.Title">
+                            </a>
+                            <h4 class="text-white playfair fs-5">@book.Title</h4>
+                            <p class="text-white-50 small italic">@book.Subtitle</p>
+                            <a href="@Url.Action("BookDetail", "Home", new { id = book.Id })" class="btn btn-custom-outline btn-sm px-4">İNCELE</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (!Model.Any())
+            {
+                <p class="text-white-50 py-5">Henüz eklenmiş bir kitap bulunamadı.</p>
+            }
+        </div>
+    </div>
+</div>

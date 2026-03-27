@@ -1,0 +1,20 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Music>
+<div class="container" style="margin-top: 120px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 section-glass-panel">
+            <h3 class="section-title">TÜM MÜZİKLERİM</h3>
+            <div class="row row-cols-2 row-cols-md-6 g-4 justify-content-center">
+                @foreach (var item in Model)
+                {
+                    <div class="col text-center mb-4">
+                        <a href="@Url.Action("MusicDetail", "Home", new { id = item.Id })">
+                            <div class="music-card mb-2"><img src="@item.ImageUrl" class="album-cover"></div>
+                            <h6 class="text-white small fw-bold">@item.Title</h6>
+                            <small class="text-muted">@item.Year</small>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
