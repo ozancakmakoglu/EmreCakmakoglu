@@ -3,7 +3,7 @@ using EmreCakmakoglu.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpContextAccessor();
 // 1. SQLite Bağlantı Ayarı
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=EmreCakmakoglu.db"));
@@ -16,7 +16,7 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // 30 dakika hareketsizlikte oturum kapanır
     options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
+    options.Cookie.IsEssential = true; 
 });
 builder.Services.AddHttpContextAccessor();
 // ------------------------------------------

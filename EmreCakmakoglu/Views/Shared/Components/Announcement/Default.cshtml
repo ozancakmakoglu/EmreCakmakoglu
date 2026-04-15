@@ -1,0 +1,34 @@
+﻿@model List<EmreCakmakoglu.Models.Announcement>
+
+@foreach (var item in Model)
+{
+    <div class="announcement-item">
+        @if (!string.IsNullOrEmpty(item.Url))
+        {
+            @* Eğer Url "http" ile başlıyorsa target="_blank" ekliyoruz *@
+            var isExternal = item.Url.StartsWith("http");
+            
+            <a href="@item.Url"
+                   class="text-decoration-none hover-red"
+                   target="@(isExternal ? "_blank" : "_self")"
+                   rel="@(isExternal ? "noopener noreferrer" : "")">
+               
+                <span class="announcement-date">@item.DateText,</span>
+                <span class="announcement-title">@item.Title</span>
+                <span class="announcement-subtitle">@item.SubTitle</span>
+                
+                @if (isExternal)
+                {
+                    @* Dış link olduğunu belirten küçük bir ikon şık durur *@
+                    <i class="bi bi-box-arrow-up-right ms-1 small opacity-50"></i>
+                }
+            </a>
+        }
+        else
+        {
+            <span class="announcement-date">@item.DateText,</span>
+            <span class="announcement-title">@item.Title</span>
+            <span class="announcement-subtitle">@item.SubTitle</span>
+        }
+    </div>
+}

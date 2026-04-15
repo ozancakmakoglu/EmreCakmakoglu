@@ -1,0 +1,11 @@
+﻿@model List<EmreCakmakoglu.Models.Menu>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item">
+        <a class="nav-link px-3" style="color: white !important;" href="@item.Url">@item.Title</a>
+    </li>
+}
+
+
+

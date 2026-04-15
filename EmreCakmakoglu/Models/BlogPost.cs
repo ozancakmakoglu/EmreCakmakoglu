@@ -8,8 +8,9 @@ namespace EmreCakmakoglu.Models
         [Required]
         public string Title { get; set; }
         public string? Summary { get; set; } // Ana sayfada görünecek kısa özet
-        public string Content { get; set; }  // Zengin metin içeriği
+        public string? Content { get; set; }  // Zengin metin içeriği
         public string? ImageUrl { get; set; }
+        public string? ExternalUrl { get; set; } // Boşsa içeriden okunur, doluysa dışarı gider.
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

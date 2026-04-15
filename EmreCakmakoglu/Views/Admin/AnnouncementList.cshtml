@@ -1,0 +1,42 @@
+﻿@model List<EmreCakmakoglu.Models.Announcement>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white">Duyuru / Son Yayınlar Listesi</h2>
+        <a href="/Admin/AnnouncementCreate" class="btn btn-success px-4">+ Yeni Duyuru Ekle</a>
+    </div>
+
+    <div class="table-responsive shadow-lg p-3 bg-dark rounded border border-secondary">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Tarih Metni</th>
+                    <th style="width: 30%">Başlık</th>
+                    <th style="width: 30%">Alt Başlık</th>
+                    <th style="width: 10%">Sıra</th>
+                    <th style="width: 15%">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-info">@item.DateText</td>
+                        <td class="fw-bold">@item.Title</td>
+                        <td class="text-secondary">@item.SubTitle</td>
+                        <td>@item.Order</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="/Admin/AnnouncementDelete/@item.Id"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Bu duyuruyu silmek istediğine emin misin?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

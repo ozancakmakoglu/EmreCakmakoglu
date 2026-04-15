@@ -1,0 +1,158 @@
+﻿@model EmreCakmakoglu.Models.SearchViewModel
+@{
+    ViewData["Title"] = "\"" + Model.SearchQuery + "\" Arama Sonuçları";
+    int totalResults = Model.Blogs.Count + Model.Musics.Count + Model.Books.Count;
+}
+
+<div class="container search-results-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            @* ÜST BAŞLIK: Aramanın ne olduğu ve toplam sayı *@
+            <div class="search-header text-center mb-5">
+                <span class="text-danger text-uppercase letter-spacing-3 small fw-bold">ARAMA SONUÇLARI</span>
+                <h1 class="display-4 text-white playfair mt-2">"@Model.SearchQuery"</h1>
+                <p class="text-white-50">Toplam @totalResults eşleşme bulundu</p>
+                <div class="red-line-center"></div>
+            </div>
+
+            <div class="section-glass-panel p-4 p-md-5">
+                
+                @if (totalResults == 0)
+                {
+                    <div class="text-center py-5">
+                        <i class="bi bi-search display-1 text-white-50 mb-4 opacity-25"></i>
+                        <h3 class="text-white">Üzgünüm, bir şey bulamadık.</h3>
+                        <p class="text-white-50">Farklı kelimelerle tekrar aramayı deneyebilirsin.</p>
+                        <a href="/" class="btn btn-custom-outline mt-4 text-white px-4">ANA SAYFAYA DÖN</a>
+                    </div>
+                }
+                else
+                {
+                    @* 1. MÜZİKLER *@
+                    @if (Model.Musics.Any())
+                    {
+                        <div class="search-group mb-5">
+                            <h5 class="group-title mb-4"><i class="bi bi-music-note-beamed me-2"></i>DİSKOGRAFİ</h5>
+                            <div class="row row-cols-2 row-cols-md-4 g-4">
+                                @foreach (var music in Model.Musics)
+                                {
+                                    <div class="col">
+                                        <a href="@Url.Action("MusicDetail", "Home", new { id = music.Id })" class="search-card-link">
+                                            <div class="search-music-card">
+                                                <img src="@music.ImageUrl" class="img-fluid rounded shadow" alt="@music.Title">
+                                                <div class="search-card-overlay">
+                                                    <span class="small">DETAY <i class="bi bi-arrow-right"></i></span>
+                                                </div>
+                                            </div>
+                                            <h6 class="text-white mt-2 mb-0 text-truncate">@music.Title</h6>
+                                            <small class="text-white-50">@music.Year</small>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @* 2. KİTAPLAR *@
+                    @if (Model.Books.Any())
+                    {
+                        <div class="search-group mb-5">
+                            <h5 class="group-title mb-4"><i class="bi bi-book me-2"></i>KİTAPLAR</h5>
+                            @foreach (var book in Model.Books)
+                            {
+                                <a href="@Url.Action("BookDetail", "Home", new { id = book.Id })" class="search-item-row mb-3">
+                                    <div class="d-flex align-items-center p-3">
+                                        <img src="@book.ImageUrl" class="rounded me-3 shadow" style="width: 50px; height: 70px; object-fit: cover;">
+                                        <div>
+                                            <h6 class="text-white mb-1">@book.Title</h6>
+                                            <p class="text-white-50 small mb-0">@book.Subtitle</p>
+                                        </div>
+                                        <i class="bi bi-chevron-right ms-auto text-white-50"></i>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+
+                    @* 3. BLOG YAZILARI *@
+                    @if (Model.Blogs.Any())
+                    {
+                        <div class="search-group">
+                            <h5 class="group-title mb-4"><i class="bi bi-journal-text me-2"></i>BLOG YAZILARI</h5>
+                            <div class="row g-3">
+                                @foreach (var blog in Model.Blogs)
+                                {
+                                    <div class="col-md-6">
+                                        <a href="@Url.Action("BlogDetail", "Home", new { id = blog.Id })" class="search-item-row h-100">
+                                            <div class="d-flex align-items-center p-3">
+                                                <div class="blog-dot me-3"></div>
+                                                <div>
+                                                    <h6 class="text-white mb-1">@blog.Title</h6>
+                                                    <small class="text-danger opacity-75">@blog.CreatedDate.ToString("dd MMM yyyy")</small>
+                                                </div>
+                                                <i class="bi bi-chevron-right ms-auto text-white-50"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .search-results-container { margin-top: 150px; margin-bottom: 100px; }
+    .letter-spacing-3 { letter-spacing: 3px; }
+    .red-line-center { width: 40px; height: 3px; background: #8B261D; margin: 15px auto; }
+
+    /* Kategori Başlığı */
+    .group-title {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    /* Müzik Kartları */
+    .search-music-card { position: relative; overflow: hidden; border-radius: 8px; transition: 0.3s; }
+    .search-card-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(139, 38, 29, 0.8);
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; transition: 0.3s; color: white;
+    }
+    .search-card-link:hover .search-card-overlay { opacity: 1; }
+    .search-card-link:hover img { transform: scale(1.1); transition: 0.5s; }
+    .search-card-link { text-decoration: none; }
+
+    /* Satır Tipi Sonuçlar (Kitap & Blog) */
+    .search-item-row {
+        display: block;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .search-item-row:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(139, 38, 29, 0.5);
+        transform: translateX(5px);
+    }
+    .blog-dot { width: 8px; height: 8px; background: #8B261D; border-radius: 50%; }
+
+    /* Glass Panel */
+    .section-glass-panel {
+        background: rgba(20, 20, 20, 0.4);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+</style>

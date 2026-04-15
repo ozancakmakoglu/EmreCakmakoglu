@@ -1,0 +1,48 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Album>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Albümler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-white">Albümler</h2>
+    <a href="/Admin/AlbumCreate" class="btn btn-danger"><i class="bi bi-plus-lg me-2"></i>Yeni Albüm</a>
+</div>
+
+<div class="admin-card p-4">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 100px;">Kapak</th>
+                    <th>Albüm Adı</th>
+                    <th>Açıklama</th>
+                    <th>Tarih</th>
+                    <th class="text-end">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@item.CoverImageUrl" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                        </td>
+                        <td class="fw-bold">@item.Title</td>
+                        <td class="text-white-50 small">@item.Description</td>
+                        <td>@item.CreatedDate.ToString("dd.MM.yyyy")</td>
+                        <td class="text-end">
+                            @* Bu buton daha sonra albümün içine fotoğraf eklemek için kullanılacak *@
+                            <a href="/Admin/AlbumDetails/@item.Id" class="btn btn-sm btn-info me-2">
+                                <i class="bi bi-images me-1"></i> Fotoğraflar
+                            </a>
+                            <a href="/Admin/AlbumDelete/@item.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('Albümü silmek istediğine emin misin?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

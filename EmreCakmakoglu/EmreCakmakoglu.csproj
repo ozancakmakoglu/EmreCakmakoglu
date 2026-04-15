@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\gallery\" />
     <Folder Include="wwwroot\uploads\musics\" />
     <Folder Include="wwwroot\uploads\books\" />
   </ItemGroup>

@@ -1,20 +1,112 @@
 ﻿@model EmreCakmakoglu.Models.BlogPost
-<div class="container mt-5 pt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="display-4 text-white mb-3">@Model.Title</h1>
-            <p class="text-muted border-bottom pb-3">@Model.CreatedDate.ToString("dd MMMM yyyy")</p>
-            
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-            {
-                <img src="@Model.ImageUrl" class="img-fluid rounded mb-4 shadow" style="width:100%; max-height:400px; object-fit:cover;">
-            }
 
-            <div class="blog-content text-white-50 fs-5" style="line-height:1.8;">
-                @Html.Raw(Model.Content) @* WYSIWYG editörden gelen HTML'i düzgün basar *@
+<div class="container blog-detail-container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            @* Üst Kısım: Geri Dönüş ve Tarih *@
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a asp-action="Blog" class="text-white-50 text-decoration-none hover-red small">
+                    <i class="fas fa-chevron-left me-2"></i>TÜM YAZILARA DÖN
+                </a>
+                <span class="text-danger small fw-bold letter-spacing-2">
+                    @Model.CreatedDate.ToString("dd MMMM yyyy")
+                </span>
             </div>
-            
-            <a href="/" class="btn btn-outline-danger mt-5">← Geri Dön</a>
+
+            @* Ana Başlık *@
+            <h1 class="blog-detail-title mb-5">@Model.Title</h1>
+
+            @* Blog Ana Panel *@
+            <div class="blog-content-panel">
+                @* Eğer içeride görsel varsa kapak olarak göster *@
+                <div class="blog-detail-cover mb-5">
+                    <img src="@Model.ImageUrl" class="img-fluid rounded shadow-lg" alt="@Model.Title">
+                </div>
+
+                @* Metin İçeriği *@
+                <div class="blog-main-text">
+                    @* Content içindeki HTML etiketlerini korumak için Raw kullanıyoruz *@
+                    @Html.Raw(Model.Content)
+                </div>
+
+                @* Alt Kısım: Paylaş veya Bitir *@
+                <div class="blog-footer-divider mt-5 pt-4">
+<div class="mt-5 pt-4 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+    @* Sol taraf: Davetkar bir metin *@
+    <span class="text-white-50 small italic">Okuduğunuz için teşekkürler.</span>
+
+    @* Sağ taraf: Blog listesine dönüş linki *@
+    <a asp-action="Blog" class="text-decoration-none hover-red d-flex align-items-center">
+        <span class="small fw-bold letter-spacing-1 text-white-50 me-2">TÜM YAZILAR</span>
+        <div class="rounded-circle border border-secondary border-opacity-50 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="fas fa-chevron-right small text-danger"></i>
+        </div>
+    </a>
+</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .blog-detail-container {
+        margin-top: 140px;
+        margin-bottom: 100px;
+    }
+
+    .blog-detail-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        color: #ffffff;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    /* OKUMA PANELİ: Arka plan dokusunu kesmek için hafif koyu ve cam efekti */
+    .blog-content-panel {
+        background: rgba(15, 15, 15, 0.7); /* Dokuyu öldüren hafif siyahlık */
+        backdrop-filter: blur(10px); /* Arka planı flulaştırır, yazıyı öne çıkarır */
+        padding: 50px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* METİN AYARLARI: Okunabilirliğin sırrı burada */
+    .blog-main-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.15rem; /* İdeal okuma boyutu */
+        line-height: 1.8; /* Satır arası boşluk */
+        color: rgba(255, 255, 255, 0.9); /* Saf beyaz değil, göz yormayan kırık beyaz */
+        letter-spacing: 0.3px;
+    }
+
+    /* İçerik içindeki başlıklar ve görseller için düzenleme */
+    .blog-main-text p { margin-bottom: 25px; }
+    
+    .blog-main-text h2, .blog-main-text h3 {
+        font-family: 'Playfair Display', serif;
+        color: #ffffff;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .blog-main-text img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 30px 0;
+    }
+
+    .blog-footer-divider {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* MOBİL AYARLAR */
+    @@media (max-width: 768px) {
+        .blog-detail-title { font-size: 2.2rem; }
+        .blog-content-panel { padding: 25px; }
+        .blog-main-text { font-size: 1.05rem; }
+    }
+</style>

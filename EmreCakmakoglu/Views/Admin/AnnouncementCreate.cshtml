@@ -1,0 +1,36 @@
+﻿@model EmreCakmakoglu.Models.Announcement
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 bg-dark p-5 rounded shadow border border-secondary">
+            <h3 class="text-white mb-4">Yeni Duyuru Ekle</h3>
+            <form asp-action="AnnouncementCreate" method="post">
+                <div class="mb-3">
+                    <label class="text-white-50">Tarih Metni (Örn: Ocak 2026)</label>
+                    <input asp-for="DateText" class="form-control bg-dark text-white border-secondary" required />
+                </div>
+                <div class="mb-3">
+                    <label class="text-white-50">Başlık (Örn: Yüzleş)</label>
+                    <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required />
+                </div>
+                <div class="mb-3">
+                    <label class="text-white-50">Alt Başlık (Örn: OnAir)</label>
+                    <input asp-for="SubTitle" class="form-control bg-dark text-white border-secondary" />
+                </div>
+                <div class="mb-3">
+                    <label class="text-white-50">Yönlendirilecek Link (Opsiyonel)</label>
+                    <input asp-for="Url" class="form-control ..." placeholder="Örn: https://www.cumhuriyet.com.tr/roportaj veya /Music" />
+                </div>
+                <div class="mb-3">
+                    <label class="text-white-50">Sıralama (1 en üstte görünür)</label>
+                    <input asp-for="Order" type="number" class="form-control bg-dark text-white border-secondary" value="1" />
+                </div>
+                
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">KAYDET</button>
+                    <a href="/Admin/AnnouncementList" class="btn btn-link w-100 text-secondary mt-2">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

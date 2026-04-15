@@ -1,0 +1,94 @@
+﻿@model IEnumerable<EmreCakmakoglu.Models.Album>
+@{
+    ViewData["Title"] = "GALERİ";
+}
+
+<div class="container internal-page-wrapper">
+    
+    @* STANDART BAŞLIK YAPISI: Boşlukları ve fontu eşitledik *@
+    <div class="text-center">
+        <h1 class="page-standard-title">@ViewData["Title"]</h1>
+        <div class="title-separator"></div>
+
+    </div>
+
+    @* ALBÜM KARTLARI *@
+    <div class="row g-4">
+        @foreach (var album in Model)
+        {
+            <div class="col-md-4">
+                <a href="@Url.Action("AlbumDetail", "Home", new { id = album.Id })" class="album-card-link">
+                    <div class="album-glass-card">
+                        <div class="album-cover-wrapper">
+                            <img src="@album.CoverImageUrl" class="album-cover-img" alt="@album.Title">
+                            <div class="album-overlay">
+                                <span class="btn-view">ALBÜMÜ GÖR</span>
+                            </div>
+                        </div>
+                        <div class="album-info p-4 text-center">
+                            <h4 class="text-white mb-2 playfair">@album.Title</h4>
+                            <p class="text-white-50 small mb-0">@album.Description</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* 1. BOŞLUKLARI AZALTAN VE BAŞLIĞI DÜZENLEYEN STANDARTLAR */
+    .internal-page-wrapper {
+        padding-top: 100px; /* Header ile aradaki o dev boşluk artık 100px (Gereksiz 150-200px silindi) */
+        padding-bottom: 80px;
+    }
+
+    .page-standard-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem; /* Tüm sayfalarda aynı büyüklükte başlık */
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .title-separator {
+        width: 60px;
+        height: 3px;
+        background-color: #8B261D;
+        margin: 0 auto 20px auto; /* Çizgi altındaki boşluk */
+    }
+
+    /* 2. SENİN GALERİ KART STİLLERİN (Aynen Korundu & İyileştirildi) */
+    .playfair { font-family: 'Playfair Display', serif; }
+    .italic { font-style: italic; opacity: 0.6; }
+
+    .album-glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: 0.4s;
+    }
+
+    .album-cover-wrapper { position: relative; height: 250px; overflow: hidden; }
+    .album-cover-img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+    
+    .album-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(139, 38, 29, 0.7);
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; transition: 0.4s;
+    }
+
+    .btn-view {
+        border: 2px solid white; color: white; padding: 10px 25px;
+        font-weight: bold; letter-spacing: 1px; font-size: 0.8rem;
+    }
+
+    .album-card-link:hover .album-overlay { opacity: 1; }
+    .album-card-link:hover .album-cover-img { transform: scale(1.1); }
+    .album-card-link:hover .album-glass-card { border-color: #8B261D; transform: translateY(-10px); }
+    .album-card-link { text-decoration: none; }
+</style>

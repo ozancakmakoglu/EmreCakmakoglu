@@ -194,6 +194,79 @@ html {
     color: #8B261D !important;
 }
 
+/* Arama Overlay Katmanı */
+.search-overlay {
+    position: fixed;
+    top: -100px; /* Başlangıçta ekranın dışında */
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border-bottom: 1px solid rgba(255, 77, 77, 0.3);
+    opacity: 0;
+}
+
+    .search-overlay.active {
+        top: 0;
+        opacity: 1;
+    }
+
+/* Input Tasarımı */
+.search-overlay-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+    color: white;
+    font-size: 1.5rem;
+    padding: 10px 40px 10px 0;
+    outline: none;
+    font-family: 'Playfair Display', serif;
+}
+
+    .search-overlay-input:focus {
+        border-color: #ff4d4d;
+    }
+
+/* Kapatma Butonu */
+.search-close-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+    .search-close-btn:hover {
+        opacity: 1;
+        color: #ff4d4d;
+    }
+
+/* Bu sınıfı biz yeni ekliyoruz, o yüzden dosyada daha önce yoktu */
+.music-meta {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7) !important; /* Görünür olması için parlaklığı artırdık */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+    font-weight: 500;
+    display: block; /* Alt satıra düzgün yerleşmesi için */
+}
+
+/* Kartın üzerine gelince kırmızıya dönmesi için şık bir efekt */
+.col:hover .music-meta {
+    color: #ff4d4d !important;
+    transition: color 0.3s ease;
+}
 /* --- 7. Responsive Ayarlar --- */
 @media (min-width: 768px) {
     .v-line {
@@ -233,4 +306,44 @@ select.glass-input {
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     background-size: 16px 12px;
+}
+
+/* Ana Sayfa Haricindeki Tüm İç Sayfalar İçin Standart Konteyner */
+/* Ana sayfada body'e özel bir class vermediysen, 
+   bu düzenlemeyi iç sayfaların en dış div'ine '.internal-page' class'ı vererek kullanabilirsin */
+
+.internal-page-wrapper {
+    padding-top: 80px; /* Header altındaki gereksiz boşluğu burası kontrol eder */
+    padding-bottom: 60px;
+}
+
+/* Standart Sayfa Başlığı Tipografisi */
+.page-standard-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; /* Başlık boyutu sabitlendi */
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    text-transform: capitalize; /* İsteğe göre 'uppercase' yapılabilir */
+}
+
+/* Başlık Altındaki Kırmızı Çizgi */
+.title-separator {
+    width: 60px;
+    height: 3px;
+    background-color: #8B261D;
+    margin: 0 auto 40px auto; /* Başlık ile içerik arasındaki boşluk */
+}
+
+/* Responsive Düzenleme (Mobil için) */
+@media (max-width: 768px) {
+    .page-standard-title {
+        font-size: 2.5rem;
+    }
+
+    .internal-page-wrapper {
+        padding-top: 50px;
+    }
 }

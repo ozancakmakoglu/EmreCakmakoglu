@@ -1,28 +1,138 @@
 ﻿@model EmreCakmakoglu.Models.Book
 @{
-    ViewData["Title"] = Model.Title;
+    // Kitap ismini başlık yapıyoruz
+    ViewData["Title"] = Model.Title.ToUpper(); 
 }
 
-<div class="container mt-5 pt-5">
-    <div class="row g-5">
-        <div class="col-md-4">
-            <img src="@Model.ImageUrl" class="img-fluid shadow-lg rounded" alt="@Model.Title">
+<div class="container internal-page-wrapper">
+    
+    @* STANDART BAŞLIK YAPISI *@
+    <div class="text-center">
+        <h1 class="page-standard-title">@ViewData["Title"]</h1>
+        <div class="title-separator"></div>
+    </div>
+
+    <div class="row g-5 align-items-start justify-content-center mt-2">
+        
+        @* SOL: Kitap Görseli *@
+        <div class="col-lg-4 col-md-5 d-flex justify-content-center">
+            <div class="book-cover-3d shadow-lg">
+                <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title">
+            </div>
         </div>
-        <div class="col-md-8">
-            <h1 class="display-4 text-white playfair">@Model.Title</h1>
-            <p class="text-danger fw-bold text-uppercase letter-spacing-2">@Model.Subtitle</p>
-            <hr class="border-secondary opacity-25 my-4">
-            
-            <div class="text-white-50 fs-5 leading-relaxed">
-                @Html.Raw(Model.Description)
+
+        @* SAĞ: Kitap İçeriği *@
+        <div class="col-lg-7 col-md-7">
+            @* Kitap Alt Başlığı *@
+            @if (!string.IsNullOrEmpty(Model.Subtitle))
+            {
+                <h5 class="text-danger text-uppercase letter-spacing-3 fw-bold mb-4">
+                    @Model.Subtitle
+                </h5>
+            }
+
+            @* OKUMA PANELİ (Arka plan ayarı çekilmiş, en okunaklı haliyle) *@
+            <div class="book-text-glass-panel p-4 p-md-5 mb-5">
+                <div class="book-content-text">
+                    @Html.Raw(Model.Description)
+                </div>
             </div>
 
-            @if (!string.IsNullOrEmpty(Model.BuyLink))
-            {
-                <a href="@Model.BuyLink" target="_blank" class="btn btn-custom-red btn-lg mt-5">KİTABI SATIN AL</a>
-            }
-            <br>
-            <a href="/" class="btn btn-link text-muted mt-3 p-0 text-decoration-none">← Ana Sayfaya Dön</a>
+            @* AKSİYON BUTONLARI *@
+            <div class="d-flex flex-wrap align-items-center gap-4">
+                @if (!string.IsNullOrEmpty(Model.BuyLink))
+                {
+                    <a href="@Model.BuyLink" target="_blank" class="btn btn-buy-now shadow-glow">
+                        <i class="bi bi-cart3 me-2"></i> İNCELE & SATIN AL
+                    </a>
+                }
+                <a href="/" class="text-white-50 text-decoration-none hover-red-text small letter-spacing-1">
+                    <i class="bi bi-chevron-left me-1"></i> ANA SAYFAYA DÖN
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* STANDART SAYFA DÜZENİ */
+    .internal-page-wrapper {
+        padding-top: 100px;
+        padding-bottom: 80px;
+    }
+
+    .page-standard-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .title-separator {
+        width: 60px;
+        height: 3px;
+        background-color: #8B261D;
+        margin: 0 auto 20px auto;
+    }
+
+    /* KİTAP METİN PANELİ (Maksimum Okunabilirlik) */
+    .book-text-glass-panel {
+        background: rgba(0, 0, 0, 0.3); /* Arka planı hafif kararttık */
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    .book-content-text {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: justify;
+    }
+
+    /* KİTAP KAPAĞI 3D EFEKTİ */
+    .book-cover-3d img {
+        border-radius: 4px 12px 12px 4px;
+        transform: rotateY(-10deg);
+        transition: 0.5s ease;
+        border-left: 3px solid rgba(255,255,255,0.1);
+    }
+
+    .book-cover-3d:hover img {
+        transform: rotateY(0deg) scale(1.02);
+    }
+
+    /* BUTON STİLİ */
+    .btn-buy-now {
+        background: #8B261D;
+        color: white;
+        padding: 14px 30px;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: 0.3s;
+        text-decoration: none;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .btn-buy-now:hover {
+        background: #a32d22;
+        box-shadow: 0 0 20px rgba(139, 38, 29, 0.4);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .hover-red-text:hover { color: #ff4d4d !important; }
+    .letter-spacing-3 { letter-spacing: 3px; }
+
+    /* MOBİL AYARLAR */
+    @@media (max-width: 991px) {
+        .page-standard-title { font-size: 2.5rem; }
+        .internal-page-wrapper { padding-top: 60px; }
+        .book-cover-3d img { transform: rotateY(0); margin-bottom: 20px; }
+        .book-text-glass-panel { padding: 25px !important; }
+    }
+</style>

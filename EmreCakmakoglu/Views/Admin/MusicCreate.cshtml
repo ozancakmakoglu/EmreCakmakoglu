@@ -18,7 +18,15 @@
                         <label class="form-label">Yayın Yılı</label>
                         <input asp-for="Year" class="form-control bg-dark text-white border-secondary" required>
                         </div>
-    
+                        <div class="mb-3">
+                            <label class="form-label text-white">Eser Türü</label>
+                            <select asp-for="MusicType" class="form-select bg-dark text-white border-secondary">
+                                <option value="Single">Single</option>
+                                <option value="Albüm">Albüm</option>
+                                <option value="EP">EP</option>
+                                <option value="Maxi Single">Maxi Single</option>
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Albüm Kapağı Seç</label>
                             <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary" accept="image/*" required>
@@ -32,7 +40,21 @@
                             <label class="form-label">Spotify Linki (Opsiyonel)</label>
                             <input asp-for="SpotifyUrl" class="form-control bg-dark text-white border-secondary">
                             </div>
-                            <button type="submit" class="btn btn-danger w-100">Kaydet ve Yayınla</button>
+                            @* ... Spotify kısmının altı ... *@
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">YouTube Linki (Opsiyonel)</label>
+                                    <input asp-for="YoutubeUrl" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label">Apple Music Linki (Opsiyonel)</label>
+                                        <input asp-for="AppleMusicUrl" class="form-control bg-dark text-white border-secondary" placeholder="https://music.apple.com/...">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-danger w-100">Kaydet ve Yayınla</button>
+
                         </form>
                         </div>
                     </div>

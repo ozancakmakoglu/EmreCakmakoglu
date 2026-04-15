@@ -3,11 +3,13 @@
     Layout = "_Layout";
     ViewData["Title"] = "Müzik Düzenle";
 }
+
 <div class="mb-4">
     <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
         <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
     </a>
 </div>
+
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -26,52 +28,88 @@
                             <div class="mb-3">
                                 <label class="form-label">Şarkı/Albüm Adı</label>
                                 <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
-                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">Yayın Yılı</label>
-                                    <input asp-for="Year" class="form-control bg-dark text-white border-secondary" required>
-                                    </div>
-                                </div>
-                            </div>
-
+                        </div>
+                        <div class="mb-3">
+    <label class="form-label text-white">Eser Türü</label>
+    <select asp-for="MusicType" class="form-select bg-dark text-white border-secondary">
+        <option value="Single">Single</option>
+        <option value="Albüm">Albüm</option>
+        <option value="EP">EP</option>
+        <option value="Maxi Single">Maxi Single</option>
+    </select>
+</div>
+                        <div class="col-md-4">
                             <div class="mb-3">
-                                <label class="form-label d-block">Mevcut Kapak</label>
-                                <img src="@Model.ImageUrl" class="img-thumbnail mb-2" style="height: 100px; width: 100px; object-fit: cover;">
-                                <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary">
+                                <label class="form-label">Yayın Yılı</label>
+                                <input asp-for="Year" class="form-control bg-dark text-white border-secondary" required>
                             </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Spotify URL</label>
-                                <input asp-for="SpotifyUrl" class="form-control bg-dark text-white border-secondary">
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label">Şarkı Sözleri / Açıklama</label>
-                                    @* ID'nin unique (benzersiz) olduğundan emin olalım *@
-                                    <textarea asp-for="Description" id="musicEditor"></textarea>
-                                </div>
-
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-warning fw-bold text-dark">Değişiklikleri Kaydet</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
+
+                    <div class="mb-3">
+                        <label class="form-label d-block">Mevcut Kapak</label>
+                        <img src="@Model.ImageUrl" class="img-thumbnail mb-2" style="height: 100px; width: 100px; object-fit: cover; border-color: #444;">
+                        <input type="file" name="imageFile" class="form-control bg-dark text-white border-secondary">
+                        <small class="text-muted">Değiştirmek istemiyorsanız boş bırakın.</small>
+                    </div>
+
+                    <hr class="border-secondary opacity-25 my-4">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label text-success"><i class="fab fa-spotify me-1"></i> Spotify URL</label>
+                                <input asp-for="SpotifyUrl" class="form-control bg-dark text-white border-secondary" placeholder="https://open.spotify.com/...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label text-danger"><i class="fab fa-youtube me-1"></i> YouTube URL</label>
+                                <input asp-for="YoutubeUrl" class="form-control bg-dark text-white border-secondary" placeholder="https://youtube.com/...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label text-info"><i class="fab fa-apple me-1"></i> Apple Music URL</label>
+                                <input asp-for="AppleMusicUrl" class="form-control bg-dark text-white border-secondary" placeholder="https://music.apple.com/...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 mt-3">
+                        <label class="form-label">Şarkı Sözleri / Açıklama</label>
+                        <textarea asp-for="Description" id="musicEditor"></textarea>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-warning fw-bold text-dark">Değişiklikleri Kaydet</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
 
-            <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-            <script>
-                ClassicEditor
-                .create(document.querySelector('#musicEditor'))
-                .catch(error => { console.error(error); });
-            </script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+    .create(document.querySelector('#musicEditor'), {
+        toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo']
+    })
+    .catch(error => { console.error(error); });
+</script>
 
-            <style>
-                .ck-editor__editable {
-                min-height: 300px;
-                color: #000 !important;
-                }
-            </style>
+<style>
+    .ck-editor__editable {
+        min-height: 300px;
+        color: #000 !important;
+        background-color: #fff !important;
+    }
+    .form-control:focus {
+        background-color: #1a1a1a;
+        color: #fff;
+        border-color: #ff4d4d;
+        box-shadow: none;
+    }
+</style>

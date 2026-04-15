@@ -3,47 +3,183 @@
     ViewData["Title"] = Model.Title;
 }
 
-<div class="container music-detail-container pb-5" style="margin-top: 100px;">
-    
-    @* Üst Başlık Bölümü *@
-    <div class="row mb-5 justify-content-center text-center">
+<div class="container music-detail-container pb-5">
+    @* Üst Başlık Bölümü: Daha modern ve okunaklı *@
+    <div class="row mb-5 justify-content-center text-center header-section">
         <div class="col-12">
-            <h1 class="display-4 fw-bold main-title text-white">@Model.Title</h1>
-            <p class="text-muted fs-5 italic">@Model.Year — Single/Albüm</p>
+            <h1 class="display-3 fw-bold main-title text-white mb-2">@Model.Title</h1>
+            <div class="sub-header d-flex justify-content-center align-items-center gap-3">
+                <span class="text-danger fw-bold letter-spacing-2">@Model.Year</span>
+                <span class="music-divider"></span>
+            </div>
         </div>
     </div>
-
-    @* Ana İçerik: align-items-start ile görseli yukarı sabitledik *@
+    <div class="sub-header d-flex justify-content-center align-items-center gap-3">
+    <span class="text-danger fw-bold letter-spacing-2">@Model.Year</span>
+    <span class="music-divider"></span>
+    <span class="text-white-50 text-uppercase small letter-spacing-2">@Model.MusicType</span>
+</div>
+    @* Ana İçerik *@
     <div class="row g-5 align-items-start justify-content-center">
         
-        @* SOL: Şarkı Görseli *@
-        <div class="col-md-4 d-flex justify-content-center justify-content-md-end">
-            <div class="album-cover-wrapper shadow-lg p-1" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 5px;">
-                <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title" style="max-width: 350px; width: 100%; border-radius: 4px;">
+        @* SOL: Şarkı Görseli (3D Efektli) *@
+        <div class="col-md-5 col-lg-4 d-flex justify-content-center justify-content-md-end">
+            <div class="album-cover-card">
+                <img src="@Model.ImageUrl" class="img-fluid shadow-2xl" alt="@Model.Title">
+                <div class="cover-glow"></div>
             </div>
         </div>
 
         @* SAĞ: Şarkı Sözleri Paneli *@
         <div class="col-md-7 col-lg-6">
-            <div class="lyrics-panel p-4" style="background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid #8B261D;">
-                
-                <h6 class="text-uppercase text-secondary small mb-4 letter-spacing-2" style="letter-spacing: 2px;">Şarkı Hakkında / Sözler</h6>
+            <div class="lyrics-panel shadow-lg">
+                <div class="panel-header d-flex align-items-center mb-4">
+                    <div class="red-line me-3"></div>
+                    <h6 class="text-uppercase text-white-50 m-0 letter-spacing-2">Şarkı Hakkında & Sözler</h6>
+                </div>
 
-                <div class="lyrics-text text-white-50" style="white-space: pre-line; line-height: 1.8; font-size: 1.1rem; italic">
+                <div class="lyrics-text">
                     @Html.Raw(Model.Description)
                 </div>
-            </div>
 
-            @* Butonlar *@
-            <div class="mt-5 d-flex gap-3 justify-content-center justify-content-md-start">
-                @if (!string.IsNullOrEmpty(Model.SpotifyUrl))
-                {
-                    <a href="@Model.SpotifyUrl" target="_blank" class="btn btn-custom-red px-4 py-2">
-                        Spotify'da Dinle
-                    </a>
-                }
-                <a href="/" class="btn btn-custom-outline px-4 py-2 text-white">Ana Sayfa'ya Dön</a>
+              @* --- DİNAMİK PLATFORM BUTONLARI --- *@
+<div class="mt-5 d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+    
+    @if (!string.IsNullOrEmpty(Model.SpotifyUrl))
+    {
+        <a href="@Model.SpotifyUrl" target="_blank" class="btn btn-spotify px-4 py-2">
+            <i class="fa-brands fa-spotify me-2"></i> Spotify
+        </a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.YoutubeUrl))
+    {
+        <a href="@Model.YoutubeUrl" target="_blank" class="btn btn-youtube px-4 py-2">
+            <i class="fa-brands fa-youtube me-2"></i> YouTube
+        </a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.AppleMusicUrl))
+    {
+        <a href="@Model.AppleMusicUrl" target="_blank" class="btn btn-apple px-4 py-2">
+            <i class="fa-brands fa-apple me-2"></i> Apple Music
+        </a>
+    }
+
+    <a href="/" class="btn btn-custom-outline px-4 py-2 text-white">
+        <i class="fa-solid fa-house me-2"></i> Geri Dön
+    </a>
+</div>
+
+<style>
+    /* Butonların genel yapısı */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+        color: white !important;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Renk Tanımları ve Parlama Efektleri */
+    .btn-spotify { background-color: #1DB954 !important; }
+    .btn-spotify:hover { background-color: #1ed760 !important; box-shadow: 0 0 15px rgba(29, 185, 84, 0.4); }
+
+    .btn-youtube { background-color: #FF0000 !important; }
+    .btn-youtube:hover { background-color: #cc0000 !important; box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); }
+
+    .btn-apple { background-color: #FC3C44 !important; }
+    .btn-apple:hover { background-color: #d63036 !important; box-shadow: 0 0 15px rgba(252, 60, 68, 0.4); }
+
+    .btn-custom-outline {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+    .btn-custom-outline:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: white !important;
+    }
+
+    /* İkon Boyutları */
+    .btn i {
+        font-size: 1.2rem;
+    }
+</style>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .music-detail-container { margin-top: 140px; }
+
+    /* Başlık ve Alt Bilgi */
+    .main-title { font-family: 'Playfair Display', serif; text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+    .music-divider { width: 5px; height: 5px; background: #8B261D; border-radius: 50%; }
+    .letter-spacing-2 { letter-spacing: 2px; }
+
+    /* Albüm Kapağı Estetiği */
+    .album-cover-card {
+        position: relative;
+        padding: 10px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+    }
+    .album-cover-card img { border-radius: 8px; width: 100%; max-width: 400px; }
+    .album-cover-card:hover { transform: scale(1.02) rotate(-1deg); }
+
+    /* Sözler Paneli (Glassmorphism) */
+    .lyrics-panel {
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(15px);
+        padding: 40px;
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.05);
+        position: relative;
+        overflow: hidden;
+    }
+    .red-line { width: 40px; height: 2px; background: #8B261D; }
+    
+    .lyrics-text {
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.8;
+        font-size: 1.1rem;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Butonlar: Kare/Modern İkonik Stil */
+    .btn-lg {
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.3rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-lg:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); color: white; }
+
+    .btn-spotify { background: #1DB954; color: white; border: none; }
+    .btn-youtube { background: #FF0000; color: white; border: none; }
+    .btn-apple { background: #FC3C44; color: white; border: none; }
+    .btn-custom-outline { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+
+    /* Mobil Düzen */
+    @@media (max-width: 768px) {
+        .music-detail-container { margin-top: 100px; }
+        .lyrics-panel { padding: 25px; }
+        .main-title { font-size: 2.5rem; }
+        .btn-lg { width: 50px; height: 50px; }
+    }
+</style>

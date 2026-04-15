@@ -1,26 +1,164 @@
-﻿<div class="container" style="margin-top: 120px;">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 section-glass-panel p-5">
-            <h3 class="section-title">İLETİŞİM</h3>
-            <form asp-action="SendMessage" method="post" class="mt-4">
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <input type="text" name="FullName" placeholder="ADINIZ SOYADINIZ" class="form-control glass-input" required>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="email" name="Email" placeholder="E-POSTA" class="form-control glass-input" required>
-                    </div>
-                    <div class="col-12">
-                        <input type="text" name="Subject" placeholder="KONU" class="form-control glass-input" required>
-                    </div>
-                    <div class="col-12">
-                        <textarea name="MessageBody" rows="5" placeholder="MESAJINIZ" class="form-control glass-input" required></textarea>
-                    </div>
-                    <div class="col-12 text-end">
-                        <button type="submit" class="btn btn-custom-red px-5">GÖNDER</button>
+﻿@using EmreCakmakoglu.Data
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext _context
+@{
+    // Menü tablosundan başlığı dinamik çekiyoruz
+    var menuTitle = _context.Menus.FirstOrDefault(m => m.Url == "/Home/Contact")?.Title ?? "İLETİŞİM";
+    ViewData["Title"] = menuTitle.ToUpper(); 
+
+    // Sosyal medya linkleri için ayarları çekiyoruz
+    var settings = _context.SiteSettings.AsNoTracking().FirstOrDefault();
+}
+
+<div class="container internal-page-wrapper">
+    
+    @* STANDART BAŞLIK YAPISI *@
+    <div class="text-center">
+        <h1 class="page-standard-title">@ViewData["Title"]</h1>
+        <div class="title-separator"></div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-6 col-md-8">
+            
+            @* OKUNABİLİRLİK PANELİ (GLASS) *@
+            <div class="contact-glass-panel p-5 shadow-lg text-center">
+                
+                @* E-Posta Bölümü *@
+                <div class="contact-section mb-5">
+                    <h6 class="text-danger small letter-spacing-2 mb-4">E-POSTA</h6>
+                    <div class="email-reveal-wrapper">
+                        <a href="javascript:void(0)" 
+                           id="contactEmailLink" 
+                           class="text-white text-decoration-none fw-bold playfair"
+                           onclick="revealContactEmail()">
+                           Görmek İçin Tıklayın
+                        </a>
                     </div>
                 </div>
-            </form>
+
+                @* Sosyal Medya Bölümü *@
+                <div class="contact-section">
+                    <h6 class="text-danger small letter-spacing-2 mb-4">SOSYAL MEDYA</h6>
+                    <div class="d-flex justify-content-center gap-4">
+                        @if (!string.IsNullOrEmpty(settings?.InstagramUrl))
+                        {
+                            <a href="@settings.InstagramUrl" target="_blank" class="social-contact-icon">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.SpotifyArtistUrl))
+                        {
+                            <a href="@settings.SpotifyArtistUrl" target="_blank" class="social-contact-icon">
+                                <i class="bi bi-spotify"></i>
+                            </a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl))
+                        {
+                            <a href="@settings.YoutubeChannelUrl" target="_blank" class="social-contact-icon">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.TwitterUrl))
+                        {
+                            <a href="@settings.TwitterUrl" target="_blank" class="social-contact-icon">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @* Alt Dönüş Linki *@
+            <div class="text-center mt-5">
+                <a href="/" class="text-white-50 text-decoration-none small hover-red-text letter-spacing-1">
+                    <i class="bi bi-chevron-left me-1"></i> ANA SAYFAYA DÖN
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* STANDART SAYFA DÜZENİ */
+    .internal-page-wrapper {
+        padding-top: 100px;
+        padding-bottom: 80px;
+    }
+
+    .page-standard-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .title-separator {
+        width: 60px;
+        height: 3px;
+        background-color: #8B261D;
+        margin: 0 auto 20px auto;
+    }
+
+    /* İLETİŞİM PANELİ (GLASS) */
+    .contact-glass-panel {
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+    }
+
+    #contactEmailLink { 
+        font-size: 1.6rem; 
+        transition: 0.3s; 
+        cursor: pointer; 
+        color: rgba(255,255,255,0.9) !important;
+    }
+    #contactEmailLink:hover { color: #ff4d4d !important; }
+
+    .social-contact-icon {
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-size: 1.4rem;
+        transition: all 0.4s ease;
+    }
+
+    .social-contact-icon:hover {
+        background: rgba(139, 38, 29, 0.2);
+        border-color: #8B261D;
+        color: #ff4d4d !important;
+        transform: translateY(-5px);
+    }
+
+    .playfair { font-family: 'Playfair Display', serif; }
+    .letter-spacing-2 { letter-spacing: 2px; }
+    .hover-red-text:hover { color: #ff4d4d !important; }
+
+    @@media (max-width: 768px) {
+        .page-standard-title { font-size: 2.5rem; }
+        .internal-page-wrapper { padding-top: 60px; }
+        #contactEmailLink { font-size: 1.2rem; }
+    }
+</style>
+
+<script>
+    function revealContactEmail() {
+        var user = "emrecakmakoglu";
+        var domain = "gmail.com";
+        var fullEmail = user + "@@" + domain;
+
+        var emailLink = document.getElementById("contactEmailLink");
+        emailLink.innerHTML = fullEmail;
+        emailLink.href = "mailto:" + fullEmail;
+        emailLink.onclick = null;
+    }
+</script>

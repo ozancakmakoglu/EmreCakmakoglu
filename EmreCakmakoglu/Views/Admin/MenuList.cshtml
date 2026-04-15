@@ -1,0 +1,22 @@
+﻿@model List<EmreCakmakoglu.Models.Menu>
+
+<h2>Menü Yönetimi</h2>
+<a href="/Admin/MenuCreate" class="btn btn-success mb-3">Yeni Menü Ekle</a>
+<table class="table">
+
+    <tr>
+        <th>Başlık</th>
+        <th>Sıra</th>
+        <th>İşlem</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Order</td>
+            <td>
+                <a asp-action="MenuEdit" asp-route-id="@item.Id" class="btn btn-warning">Düzenle</a>
+            </td>
+        </tr>
+    }
+</table>

@@ -30,7 +30,11 @@
                             <label class="form-label">Kısa Özet (Ana sayfada görünen kısım)</label>
                             <textarea asp-for="Summary" class="form-control bg-dark text-white border-secondary" rows="2"></textarea>
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label text-white-50">Dış Bağlantı URL (Opsiyonel)</label>
+                            <input type="url" name="ExternalUrl" class="form-control glass-input" placeholder="https://wannart.com/yazi-linki">
+                            <small class="text-muted">Eğer yazı başka bir platformdaysa buraya linkini yapıştırın. Boş bırakırsanız yazı sitede açılır.</small>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label d-block">Mevcut Görsel</label>
                             @if (!string.IsNullOrEmpty(Model.ImageUrl))

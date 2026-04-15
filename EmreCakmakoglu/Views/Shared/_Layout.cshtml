@@ -1,10 +1,13 @@
 ﻿@using EmreCakmakoglu.Data
+@using Microsoft.AspNetCore.Http
+@using Microsoft.EntityFrameworkCore @* Bunu ekledik *@
 @inject AppDbContext _context
+@inject IHttpContextAccessor HttpContextAccessor
 @{
-    // Veritabanından mevcut ayarları çekiyoruz
-    var settings = _context.SiteSettings.FirstOrDefault();
-    // Eğer veritabanında bir tema seçili değilse varsayılan olarak "site.css" kullanıyoruz
+    // Veritabanından her zaman en güncel veriyi zorla çekiyoruz
+    var settings = _context.SiteSettings.AsNoTracking().FirstOrDefault();
     var activeTheme = settings?.ActiveTheme ?? "site.css";
+    var isAdmin = HttpContextAccessor.HttpContext?.Session.GetString("IsAdmin");
 }
 
 <!DOCTYPE html>
@@ -14,15 +17,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Emre Çakmakoğlu</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    @* DİNAMİK TEMA YÜKLEYİCİ: Veritabanındaki değere göre site.css, site2.css vb. yüklenir *@
+    @* DİNAMİK TEMA YÜKLEYİCİ *@
     <link rel="stylesheet" href="~/css/@activeTheme" asp-append-version="true" />
 </head>
 <body class="bg-dark text-light">
@@ -35,25 +38,36 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                        </li>
-                        <li class="nav-item">
-                            @* Tüm Müzikler Sayfası *@
-                            <a class="nav-link" asp-controller="Home" asp-action="Music">Müzik</a>
-                        </li>
-                        <li class="nav-item">
-                            @* Tüm Kitaplar Sayfası *@
-                            <a class="nav-link" asp-controller="Home" asp-action="Books">Kitap</a>
-                        </li>
-                        <li class="nav-item">
-                            @* Tüm Blog Yazıları Sayfası *@
-                            <a class="nav-link" asp-controller="Home" asp-action="Blog">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Contact">İletişim</a>
-                        </li>
+                    <ul class="navbar-nav ms-auto align-items-center">
+
+                        @await Component.InvokeAsync("Menu")
+                        <li class="nav-item ms-lg-3 d-flex align-items-center">
+    @* Arama Tetikleyici İkon *@
+    <a href="javascript:void(0)" class="nav-link search-trigger" onclick="toggleSearch()">
+        <i class="bi bi-search fs-5"></i>
+    </a>
+</li>
+
+@* Gizli Arama Barı (Tıklayınca Üstten Düşecek) *@
+<div id="searchOverlay" class="search-overlay">
+    <div class="container h-100 d-flex align-items-center">
+        <form asp-action="Search" asp-controller="Home" method="get" class="w-100 position-relative">
+            <input type="text" name="q" class="search-overlay-input" placeholder="Bir şarkı, kitap veya yazı adı yazın..." autocomplete="off">
+            <button type="button" class="search-close-btn" onclick="toggleSearch()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+                        @if (!string.IsNullOrEmpty(isAdmin))
+                        {
+                            <li class="nav-item ms-lg-3 ps-lg-3 border-start border-secondary border-opacity-50">
+                                <a class="nav-link fw-bold text-warning" href="/Admin/Index">
+                                    <i class="bi bi-speedometer2 me-1"></i> PANEL
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -64,13 +78,99 @@
         @RenderBody()
     </main>
 
-    <footer class="py-5 text-center border-top border-secondary mt-5">
-        <div class="container">
-            <p>&copy; 2026 - Emre Çakmakoğlu</p>
+    <footer class="footer-section py-5 mt-5">
+        <div class="container text-center">
+            <div class="social-links mb-4">
+                @if (!string.IsNullOrEmpty(settings?.InstagramUrl))
+                {
+                    <a href="@settings.InstagramUrl" target="_blank" class="mx-2 text-white-50 fs-5">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrEmpty(settings?.SpotifyArtistUrl))
+                {
+                    <a href="@settings.SpotifyArtistUrl" target="_blank" class="mx-2 text-white-50 fs-5">
+                        <i class="bi bi-spotify"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl))
+                {
+                    <a href="@settings.YoutubeChannelUrl" target="_blank" class="mx-2 text-white-50 fs-5">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                }
+
+                @* Twitter alanını Apple Music olarak kullanıyoruz *@
+                @if (!string.IsNullOrEmpty(settings?.TwitterUrl))
+                {
+                    <a href="@settings.TwitterUrl" target="_blank" class="mx-2 text-white-50 fs-5">
+                        <i class="bi bi-apple"></i>
+                    </a>
+                }
+            </div>
+
+            <div class="email-reveal-wrapper mb-3">
+                <span class="text-white-50">İletişim: </span>
+                <a href="javascript:void(0)"
+                   id="emailLink"
+                   class="text-info text-decoration-none fw-bold border-bottom border-info border-opacity-25"
+                   onclick="revealEmail()">E-Posta Göster</a>
+            </div>
+
+            <div class="footer-bottom mt-4 pt-4 border-top border-secondary border-opacity-25">
+                <p class="mb-0 text-white-50 small">&copy; 2026 - Emre Çakmakoğlu</p>
+                <span class="small opacity-25" style="font-size: 0.7rem;">Müzisyen & Yazar</span>
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function revealEmail() {
+            var user = "emrecakmakoglu";
+            var domain = "gmail.com";
+            var fullEmail = user + "@@" + domain;
+
+            var emailLink = document.getElementById("emailLink");
+            emailLink.innerHTML = fullEmail;
+            emailLink.href = "mailto:" + fullEmail;
+            emailLink.onclick = null;
+            emailLink.classList.add("text-warning");
+        }
+
+
+
+        function toggleSearch() {
+    const overlay = document.getElementById('searchOverlay');
+    overlay.classList.toggle('active');
+    
+    // Açıldığında otomatik olarak içine odaklan (focus)
+    if (overlay.classList.contains('active')) {
+        setTimeout(() => {
+            overlay.querySelector('input').focus();
+        }, 400);
+    }
+}
+
+// ESC tuşuna basınca aramayı kapat
+document.addEventListener('keydown', (e) => {
+    if (e.key === "Escape") {
+        document.getElementById('searchOverlay').classList.remove('active');
+    }
+});
+    </script>
+
+    <style>
+        .footer-section { background: rgba(0,0,0,0.2); }
+        .social-links a { text-decoration: none; transition: 0.3s; }
+        .social-links a:hover { color: #fff !important; }
+        #emailLink { transition: all 0.5s ease; cursor: pointer; }
+        #emailLink:hover { color: #fff !important; border-color: #fff !important; }
+    </style>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -36,6 +36,86 @@ namespace EmreCakmakoglu.Migrations
                     b.ToTable("Admins");
                 });
 
+            modelBuilder.Entity("EmreCakmakoglu.Models.Album", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CoverImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("EmreCakmakoglu.Models.AlbumImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId");
+
+                    b.ToTable("AlbumImages");
+                });
+
+            modelBuilder.Entity("EmreCakmakoglu.Models.Announcement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("DateText")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Announcements");
+                });
+
             modelBuilder.Entity("EmreCakmakoglu.Models.BlogPost", b =>
                 {
                     b.Property<int>("Id")
@@ -43,10 +123,12 @@ namespace EmreCakmakoglu.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExternalUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageUrl")
@@ -127,17 +209,48 @@ namespace EmreCakmakoglu.Migrations
                     b.ToTable("ContactMessages");
                 });
 
+            modelBuilder.Entity("EmreCakmakoglu.Models.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus");
+                });
+
             modelBuilder.Entity("EmreCakmakoglu.Models.Music", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("AppleMusicUrl")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MusicType")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SpotifyUrl")
@@ -151,6 +264,9 @@ namespace EmreCakmakoglu.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("YoutubeUrl")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Musics");
@@ -161,6 +277,15 @@ namespace EmreCakmakoglu.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("AboutImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AboutText")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AboutTitle")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ActiveTheme")
                         .HasColumnType("TEXT");
@@ -192,6 +317,22 @@ namespace EmreCakmakoglu.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SiteSettings");
+                });
+
+            modelBuilder.Entity("EmreCakmakoglu.Models.AlbumImage", b =>
+                {
+                    b.HasOne("EmreCakmakoglu.Models.Album", "Album")
+                        .WithMany("Images")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Album");
+                });
+
+            modelBuilder.Entity("EmreCakmakoglu.Models.Album", b =>
+                {
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

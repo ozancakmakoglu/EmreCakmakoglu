@@ -1,95 +1,81 @@
 ﻿@{
+    Layout = "_Layout";
     ViewData["Title"] = "Yönetim Paneli";
 }
 
-<div class="container" style="margin-top: 120px; margin-bottom: 100px;">
-    <div class="row justify-content-center">
-        <div class="col-lg-11 section-glass-panel shadow-lg">
-            
-            @* Başlık Bölümü *@
-            <div class="border-bottom border-secondary border-opacity-25 pb-4 mb-5">
-                <h3 class="section-title mb-2">YÖNETİM PANELİ</h3>
-                <p class="text-white-50 italic mb-0">Hoş geldiniz. Sitenizdeki tüm sanatsal içerikleri ve gelen mesajları buradan kontrol edebilirsiniz.</p>
+<div class="container-fluid">
+    <div class="row g-4">
+        @* 1. DİSKOGRAFİ YÖNETİMİ *@
+        <div class="col-md-4">
+            <div class="admin-card text-center p-5 shadow-lg">
+                <i class="bi bi-music-note-beamed display-3 text-danger mb-3"></i>
+                <h4 class="text-white mb-4">DİSKOGRAFİ</h4>
+                <p class="text-white-50 small mb-4">Müzik eserlerini ekle, düzenle veya kaldır.</p>
+                <a href="/Admin/MusicList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
             </div>
+        </div>
 
-            @* Yönetim Kartları - Satır 1 *@
-            <div class="row g-4 mb-4">
-                
-                @* Müzik Yönetimi *@
-                <div class="col-md-3">
-                    <div class="admin-stat-card p-4 text-center h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-                        <i class="bi bi-music-note-beamed fs-1 text-danger mb-3 d-block"></i>
-                        <h5 class="text-white playfair">Müzikler</h5>
-                        <p class="small text-muted mb-4">Şarkı ekle, sil veya sözleri güncelle.</p>
-                        <a href="/Admin/MusicList" class="btn btn-custom-red w-100 py-2">YÖNET</a>
-                    </div>
-                </div>
-
-                @* Kitap Yönetimi *@
-                <div class="col-md-3">
-                    <div class="admin-stat-card p-4 text-center h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-                        <i class="bi bi-book fs-1 text-danger mb-3 d-block"></i>
-                        <h5 class="text-white playfair">Kitaplar</h5>
-                        <p class="small text-muted mb-4">Roman bilgilerini ve satın alma linklerini düzenle.</p>
-                        <a href="/Admin/BookList" class="btn btn-custom-red w-100 py-2">YÖNET</a>
-                    </div>
-                </div>
-
-                @* Blog Yönetimi *@
-                <div class="col-md-3">
-                    <div class="admin-stat-card p-4 text-center h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
-                        <i class="bi bi-journal-text fs-1 text-danger mb-3 d-block"></i>
-                        <h5 class="text-white playfair">Blog</h5>
-                        <p class="small text-muted mb-4">Yeni yazılar paylaş veya eskileri düzenle.</p>
-                        <a href="/Admin/BlogList" class="btn btn-custom-red w-100 py-2">YÖNET</a>
-                    </div>
-                </div>
-
-                @* Mesaj Yönetimi *@
-                <div class="col-md-3">
-                    <div class="admin-stat-card p-4 text-center h-100" style="background: rgba(139, 38, 29, 0.05); border: 1px solid rgba(139, 38, 29, 0.2);">
-                        <i class="bi bi-chat-right-dots fs-1 text-danger mb-3 d-block"></i>
-                        <h5 class="text-white playfair">Mesajlar</h5>
-                        <p class="small text-muted mb-4">Ziyaretçilerden gelen iletişim formlarını oku.</p>
-                        <a href="/Admin/Messages" class="btn btn-custom-red w-100 py-2">MESAJLARI GÖR</a>
-                    </div>
-                </div>
+        @* 2. BLOG YÖNETİMİ *@
+        <div class="col-md-4">
+            <div class="admin-card text-center p-5 shadow-lg">
+                <i class="bi bi-journal-text display-3 text-danger mb-3"></i>
+                <h4 class="text-white mb-4">BLOG YAZILARI</h4>
+                <p class="text-white-50 small mb-4">Yazılarını ve makalelerini buradan yönet.</p>
+                <a href="/Admin/BlogList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
             </div>
+        </div>
 
-            @* Yönetim Kartları - Satır 2 (Sistem Ayarları) *@
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="admin-stat-card p-4 text-center h-100" style="background: rgba(255,255,255,0.01); border: 1px dotted rgba(255,255,255,0.2);">
-                        <i class="bi bi-sliders fs-1 text-white-50 mb-3 d-block"></i>
-                        <h5 class="text-white playfair">Genel Ayarlar</h5>
-                        <p class="small text-muted mb-4">YouTube, Spotify ve Sosyal Medya linklerini güncelle.</p>
-                        <a href="/Admin/Settings" class="btn btn-outline-light w-100 py-2" style="border-radius:0; font-size:0.75rem;">DÜZENLE</a>
-                    </div>
-                </div>
-                
-                @* Gelecekte buraya başka ayar kartları da ekleyebilirsin *@
+        @* 3. GALERİ YÖNETİMİ (Eski Mesajlar yerine gelen yeni kısım) *@
+        <div class="col-md-4">
+            <div class="admin-card text-center p-5 shadow-lg border-danger border-opacity-25">
+                <i class="bi bi-images display-3 text-danger mb-3"></i>
+                <h4 class="text-white mb-4">FOTO GALERİ</h4>
+                <p class="text-white-50 small mb-4">Fotoğraf albümleri oluştur ve anılarını paylaş.</p>
+                <a href="/Admin/AlbumList" class="btn btn-danger w-100 py-2">ALBÜMLERİ YÖNET</a>
             </div>
+        </div>
 
-            @* Hızlı Erişim Alt Barı *@
-            <div class="mt-5 pt-4 border-top border-secondary border-opacity-10 d-flex justify-content-between align-items-center">
-                <a href="/" target="_blank" class="text-white-50 small hover-red"><i class="bi bi-eye me-2"></i>Siteyi Görüntüle</a>
-                <div class="d-flex gap-3 align-items-center">
-                    <span class="text-muted" style="font-size: 0.7rem;">Sistem Durumu: Çevrimiçi</span>
-                    <a href="/Admin/Logout" class="btn btn-sm btn-outline-danger py-1" style="font-size: 0.65rem;">ÇIKIŞ YAP</a>
-                </div>
+        @* 4. KİTAP YÖNETİMİ *@
+        <div class="col-md-4">
+            <div class="admin-card text-center p-5 shadow-lg">
+                <i class="bi bi-book display-3 text-danger mb-3"></i>
+                <h4 class="text-white mb-4">KİTAPLAR</h4>
+                <p class="text-white-50 small mb-4">Yayınlanmış kitaplarını sisteme ekle.</p>
+                <a href="/Admin/BookList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
             </div>
-
+        </div>
+        @* 5. MENÜ YÖNETİMİ *@
+<div class="col-md-4">
+    <div class="admin-card text-center p-5 shadow-lg">
+        <i class="bi bi-list-ul display-3 text-danger mb-3"></i>
+        <h4 class="text-white mb-4">MENÜ YÖNETİMİ</h4>
+        <p class="text-white-50 small mb-4">Üst menüdeki başlıkları ve sıralamayı düzenle.</p>
+        <a href="/Admin/MenuList" class="btn btn-outline-danger w-100 py-2">DÜZENLE</a>
+    </div>
+</div>
+        @* 6. SİTE AYARLARI *@
+        <div class="col-md-4">
+            <div class="admin-card text-center p-5 shadow-lg">
+                <i class="bi bi-gear display-3 text-danger mb-3"></i>
+                <h4 class="text-white mb-4">SİTE AYARLARI</h4>
+                <p class="text-white-50 small mb-4">Sosyal medya linkleri, tema ve hero görseli.</p>
+                <a href="/Admin/Settings" class="btn btn-outline-danger w-100 py-2">DÜZENLE</a>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-    .admin-stat-card {
-        transition: 0.3s all ease;
+    .admin-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        transition: all 0.4s ease;
     }
-    .admin-stat-card:hover {
+    .admin-card:hover {
+        background: rgba(139, 38, 29, 0.05);
+        border-color: rgba(139, 38, 29, 0.3);
         transform: translateY(-10px);
-        background: rgba(255,255,255,0.07) !important;
-        border-color: #8B261D !important;
     }
 </style>

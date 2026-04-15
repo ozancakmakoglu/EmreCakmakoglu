@@ -1,0 +1,22 @@
+﻿@model EmreCakmakoglu.Models.Menu
+
+<h2>Yeni Menü Öğesi Ekle</h2>
+
+<form asp-action="MenuCreate" method="post">
+    <div class="form-group">
+        <label>Menü Başlığı (Örn: Müzik)</label>
+        <input asp-for="Title" class="form-control" placeholder="Başlık giriniz..." />
+    </div>
+    <div class="form-group">
+        <label>Bağlantı Adresi (Url)</label>
+        <input asp-for="Url" class="form-control" placeholder="/Music veya https://..." />
+    </div>
+    <div class="form-group">
+        <label>Sıralama (1, 2, 3...)</label>
+        <input asp-for="Order" type="number" class="form-control" />
+    </div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a href="/Admin/MenuList" class="btn btn-secondary">İptal</a>
+    </div>
+</form>

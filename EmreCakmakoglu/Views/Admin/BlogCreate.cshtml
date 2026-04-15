@@ -16,8 +16,14 @@
                 <input asp-for="Title" class="form-control bg-dark text-white border-secondary" required>
                 </div>
                 <div class="mb-3">
-                    <label>Kısa Özet (Ana Sayfa İçin)</label>
-                    <input asp-for="Summary" class="form-control bg-dark text-white border-secondary">
+                    <label class="form-label text-white-50">Kısa Tanıtım / Alıntı</label>
+                    <textarea name="Summary" class="form-control glass-input" rows="4"
+                              placeholder="Yazının ana sayfada görünecek kısa özeti..."></textarea>
+                </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white-50">Dış Bağlantı URL (Opsiyonel)</label>
+                        <input type="url" name="ExternalUrl" class="form-control glass-input" placeholder="https://wannart.com/yazi-linki">
+                        <small class="text-muted">Eğer yazı başka bir platformdaysa buraya linkini yapıştırın. Boş bırakırsanız yazı sitede açılır.</small>
                     </div>
                     <div class="mb-3">
                         <label>Kapak Görseli</label>

@@ -15,27 +15,30 @@ namespace EmreCakmakoglu.Controllers
             _context = context;
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
         // --- ANA SAYFA ---
         public IActionResult Index()
         {
-            // 1. Müzikler: Son eklenen 6 müziği getir
             var musics = _context.Musics
                                  .OrderByDescending(m => m.Year)
                                  .ThenByDescending(m => m.Id)
                                  .Take(6)
                                  .ToList();
+
             ViewBag.Settings = _context.SiteSettings.FirstOrDefault();
 
-            // 2. Blog Yazıları: Son 5 yazıyı çek
             ViewBag.Blogs = _context.BlogPosts
-                                    .OrderByDescending(b => b.CreatedDate)
-                                    .Take(5)
-                                    .ToList();
+                                   .OrderByDescending(b => b.CreatedDate)
+                                   .Take(5)
+                                   .ToList();
 
-            // 3. En Son Kitap: "Yeni Romanım" alanı için
             ViewBag.LatestBook = _context.Books
-                                         .OrderByDescending(b => b.CreatedDate)
-                                         .FirstOrDefault();
+                                        .OrderByDescending(b => b.CreatedDate)
+                                        .FirstOrDefault();
 
             return View(musics);
         }
@@ -85,13 +88,22 @@ namespace EmreCakmakoglu.Controllers
             return View(book);
         }
 
+        // --- TÜM KİTAPLAR ---
+        public IActionResult Books()
+        {
+            var allBooks = _context.Books
+                                   .OrderByDescending(b => b.CreatedDate)
+                                   .ToList();
+            return View(allBooks);
+        }
+
         // --- İLETİŞİM SAYFASI ---
         public IActionResult Contact()
         {
             return View();
         }
 
-        // --- İLETİŞİM FORMU GÖNDERME (MESAJI KAYDETME) ---
+        // --- İLETİŞİM FORMU ---
         [HttpPost]
         public async Task<IActionResult> SendMessage(ContactMessage model)
         {
@@ -101,17 +113,52 @@ namespace EmreCakmakoglu.Controllers
                 _context.ContactMessages.Add(model);
                 await _context.SaveChangesAsync();
 
-                // Mesaj gönderildi bilgisi (View'da yakalayabilirsin)
                 TempData["MessageSent"] = "Mesajınız başarıyla gönderildi!";
                 return RedirectToAction("Contact");
             }
+
             return View("Contact", model);
         }
-        // Tüm Kitapların Listelendiği Sayfa
-        public IActionResult Books()
+
+        public async Task<IActionResult> Search(string q)
         {
-            var allBooks = _context.Books.OrderByDescending(b => b.CreatedDate).ToList();
-            return View(allBooks);
+            if (string.IsNullOrEmpty(q)) return RedirectToAction("Index");
+
+            var query = q.ToLower();
+
+            var viewModel = new SearchViewModel
+            {
+                SearchQuery = q,
+                Blogs = await _context.BlogPosts
+                    .Where(b => b.Title.ToLower().Contains(query) || b.Summary.ToLower().Contains(query))
+                    .ToListAsync(),
+                Musics = await _context.Musics
+                    .Where(m => m.Title.ToLower().Contains(query) || m.Description.ToLower().Contains(query))
+                    .ToListAsync(),
+                Books = await _context.Books
+                    .Where(b => b.Title.ToLower().Contains(query) || b.Subtitle.ToLower().Contains(query))
+                    .ToListAsync()
+            };
+
+            return View(viewModel);
+        }
+        // Tüm Albümlerin Listesi
+        public async Task<IActionResult> Gallery()
+        {
+            var albums = await _context.Albums.OrderByDescending(a => a.CreatedDate).ToListAsync();
+            return View(albums);
+        }
+
+        // Albümün İçindeki Fotoğraflar
+        public async Task<IActionResult> AlbumDetail(int id)
+        {
+            var album = await _context.Albums
+                .Include(a => a.Images)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (album == null) return NotFound();
+
+            return View(album);
         }
     }
 }

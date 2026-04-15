@@ -1,0 +1,65 @@
+﻿@model EmreCakmakoglu.Models.SiteSettings
+
+<div class="container mt-5">
+    <h2 class="text-white mb-4">Hakkımda Sayfasını Düzenle</h2>
+    <form asp-action="AboutEdit" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="text-white-50">Sayfa Başlığı</label>
+                    <input asp-for="AboutTitle" class="form-control bg-dark text-white border-secondary" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-white-50">Biyografi Metni</label>
+                    @* Buradaki textarea'ya id="editor" ekledik, fazladan olanı aşağıdan sildik *@
+                    <textarea asp-for="AboutText" id="editor" class="form-control bg-dark text-white border-secondary" rows="12"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label class="text-white-50">Mevcut Fotoğraf</label>
+                    <div class="mb-2">
+                        <img src="@Model.AboutImageUrl" class="img-thumbnail bg-dark border-secondary" style="max-height: 200px;" />
+                    </div>
+                    <label class="text-white-50">Yeni Fotoğraf Seç</label>
+                    <input type="file" name="aboutImage" class="form-control bg-dark text-white border-secondary" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary px-5">GÜNCELLE</button>
+            <a href="/Admin/Index" class="btn btn-secondary px-5">İPTAL</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    
+    <script>
+        ClassicEditor
+        .create(document.querySelector('#editor'), {
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo' ],
+        })
+        .catch(error => {
+        console.error(error);
+        });
+    </script>
+
+    <style>
+        /* Editör kutusunun boyutu ve yazı rengi ayarı */
+        .ck-editor__editable {
+        min-height: 400px;
+        color: black !important;
+        }
+        /* Editörün dış çerçevesinin koyu temada sırıtmaması için */
+        .ck-editor {
+        color: black !important;
+        }
+    </style>
+}

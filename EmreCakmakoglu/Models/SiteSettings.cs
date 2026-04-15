@@ -7,19 +7,26 @@ namespace EmreCakmakoglu.Models
         [Key]
         public int Id { get; set; }
 
+        // Tema
+        public string? ActiveTheme { get; set; } // Örn: "site.css", "site2.css"
+
+        // Hakkımda Alanı
+        public string? AboutTitle { get; set; }
+        public string? AboutText { get; set; }
+        public string? AboutImageUrl { get; set; } // YENİ EKLENEN
+
         // Medya Ayarları
         public string? YoutubeVideoId { get; set; } // Örn: VqnQmjfkr_4
-        public string? SpotifyEmbedUrl { get; set; } // Spotify'ın "Paylaş > Yerleştir" linki
-        public string? HeroImageUrl { get; set; }// YENİ EKLENEN ALAN: Sanatçı Ana Görseli (Saydam PNG)
+        public string? SpotifyEmbedUrl { get; set; } // Spotify embed linki
+        public string? HeroImageUrl { get; set; } // Ana görsel
 
         // Sosyal Medya Linkleri
         public string? InstagramUrl { get; set; }
         public string? TwitterUrl { get; set; }
         public string? YoutubeChannelUrl { get; set; }
         public string? SpotifyArtistUrl { get; set; }
-        public string? ActiveTheme { get; set; } // Örn: "site.css", "site2.css"
 
-        // Alt Kısım Metni (Copyright vb.)
+        // Alt Kısım Metni
         public string? FooterText { get; set; }
     }
 }
