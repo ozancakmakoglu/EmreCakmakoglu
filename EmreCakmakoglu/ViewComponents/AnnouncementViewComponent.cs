@@ -15,13 +15,13 @@ namespace EmreCakmakoglu.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var items = await _context.Announcements
-                .Where(x => x.IsActive)
-                .OrderBy(x => x.Order)
+            // Id'ye göre tersten sırala (en son eklenen en üstte) ve sadece ilk 5'ini al
+            var announcements = await _context.Announcements
+                .OrderByDescending(x => x.Id)
                 .Take(5)
                 .ToListAsync();
 
-            return View(items);
+            return View(announcements);
         }
     }
 }

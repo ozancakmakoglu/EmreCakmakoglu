@@ -1,22 +1,87 @@
-﻿@model List<EmreCakmakoglu.Models.Menu>
+﻿@model IEnumerable<EmreCakmakoglu.Models.Menu>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Menü Yönetimi";
+}
 
-<h2>Menü Yönetimi</h2>
-<a href="/Admin/MenuCreate" class="btn btn-success mb-3">Yeni Menü Ekle</a>
-<table class="table">
+<div class="mb-4">
+    <a href="/Admin/Index" class="text-white-50 small hover-red text-decoration-none">
+        <i class="bi bi-arrow-left me-2"></i>Panel Ana Sayfasına Dön
+    </a>
+</div>
 
-    <tr>
-        <th>Başlık</th>
-        <th>Sıra</th>
-        <th>İşlem</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Title</td>
-            <td>@item.Order</td>
-            <td>
-                <a asp-action="MenuEdit" asp-route-id="@item.Id" class="btn btn-warning">Düzenle</a>
-            </td>
-        </tr>
+<div class="container mt-5 pt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-white border-start border-danger border-4 ps-3">Menü Yönetimi</h2>
+            <p class="text-white-50 small m-0">Sitenin üst navigasyon panelini buradan düzenleyebilirsiniz.</p>
+        </div>
+        <a href="/Admin/MenuCreate" class="btn btn-danger shadow-sm px-4 rounded-pill">
+            <i class="bi bi-plus-lg me-2"></i>Yeni Menü Ekle
+        </a>
+    </div>
+
+    <div class="card bg-dark border-secondary shadow-lg">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0 align-middle">
+                <thead>
+                    <tr class="text-secondary small text-uppercase">
+                        <th class="ps-4">Başlık</th>
+                        <th>URL / Link</th>
+                        <th class="text-center">Sıralama</th>
+                        <th class="text-end pe-4">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class="border-bottom border-white-5">
+                                <td class="ps-4 fw-bold text-white">@item.Title</td>
+                                <td class="text-white-50 small">@item.Url</td>
+                                <td class="text-center">
+                                    <span class="badge bg-secondary rounded-pill">@item.Order</span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        @* DÜZENLE BUTONU *@
+                                        <a href="/Admin/MenuEdit/@item.Id" class="btn btn-sm btn-outline-warning rounded-pill px-3">
+                                            <i class="bi bi-pencil me-1"></i> Düzenle
+                                        </a>
+
+                                        @* SİLME FORMU *@
+                                        <form asp-action="MenuDelete" asp-route-id="@item.Id" method="post" 
+                                              onsubmit="return confirm('Bu menü öğesini silmek istediğinize emin misiniz?')" 
+                                              style="display:inline;">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                <i class="bi bi-trash me-1"></i> Sil
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted fst-italic">Henüz menü öğesi eklenmemiş.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-red:hover { color: #dc3545 !important; transition: 0.3s; }
+    .table-dark { background-color: transparent; }
+    .border-white-5 { border-color: rgba(255, 255, 255, 0.05) !important; }
+    .table-hover tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        transition: 0.3s;
     }
-</table>
+</style>

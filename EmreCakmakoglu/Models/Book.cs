@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace EmreCakmakoglu.Models
 {
     public class Book
@@ -14,3 +13,4 @@ namespace EmreCakmakoglu.Models
         public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }
+

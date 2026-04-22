@@ -46,7 +46,23 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="mb-3">
+                        <label class="form-label">Yayın Ayı (Sıralama için)</label>
+                        <select asp-for="Month" class="form-control bg-dark text-white">
+                            <option value="1">Ocak</option>
+                            <option value="2">Şubat</option>
+                            <option value="3">Mart</option>
+                            <option value="4">Nisan</option>
+                            <option value="5">Mayıs</option>
+                            <option value="6">Haziran</option>
+                            <option value="7">Temmuz</option>
+                            <option value="8">Ağustos</option>
+                            <option value="9">Eylül</option>
+                            <option value="10">Ekim</option>
+                            <option value="11">Kasım</option>
+                            <option value="12">Aralık</option>
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label d-block">Mevcut Kapak</label>
                         <img src="@Model.ImageUrl" class="img-thumbnail mb-2" style="height: 100px; width: 100px; object-fit: cover; border-color: #444;">

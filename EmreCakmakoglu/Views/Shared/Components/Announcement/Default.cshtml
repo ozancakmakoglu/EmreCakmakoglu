@@ -1,34 +1,36 @@
-﻿@model List<EmreCakmakoglu.Models.Announcement>
+﻿@model IEnumerable<EmreCakmakoglu.Models.Announcement>
 
-@foreach (var item in Model)
-{
-    <div class="announcement-item">
-        @if (!string.IsNullOrEmpty(item.Url))
-        {
-            @* Eğer Url "http" ile başlıyorsa target="_blank" ekliyoruz *@
-            var isExternal = item.Url.StartsWith("http");
-            
-            <a href="@item.Url"
-                   class="text-decoration-none hover-red"
-                   target="@(isExternal ? "_blank" : "_self")"
-                   rel="@(isExternal ? "noopener noreferrer" : "")">
-               
-                <span class="announcement-date">@item.DateText,</span>
-                <span class="announcement-title">@item.Title</span>
-                <span class="announcement-subtitle">@item.SubTitle</span>
-                
-                @if (isExternal)
-                {
-                    @* Dış link olduğunu belirten küçük bir ikon şık durur *@
-                    <i class="bi bi-box-arrow-up-right ms-1 small opacity-50"></i>
-                }
-            </a>
-        }
-        else
-        {
-            <span class="announcement-date">@item.DateText,</span>
-            <span class="announcement-title">@item.Title</span>
-            <span class="announcement-subtitle">@item.SubTitle</span>
-        }
-    </div>
-}
+<div class="ann-list-container">
+    @foreach (var item in Model)
+    {
+        <div class="ann-row">
+            @if (!string.IsNullOrEmpty(item.Url))
+            {
+                <a href="@item.Url" class="ann-full-link" target="_blank">
+                    <span class="ann-date">@item.DateText</span>
+                    <div class="ann-content">
+                        <span class="ann-title">@item.Title</span>
+                        @if (!string.IsNullOrEmpty(item.SubTitle))
+                        {
+                            <span class="ann-sub">@item.SubTitle</span>
+                        }
+                    </div>
+                    <i class="bi bi-arrow-right-short ann-icon"></i>
+                </a>
+            }
+            else
+            {
+                <div class="ann-full-link no-click">
+                    <span class="ann-date">@item.DateText</span>
+                    <div class="ann-content">
+                        <span class="ann-title">@item.Title</span>
+                        @if (!string.IsNullOrEmpty(item.SubTitle))
+                        {
+                            <span class="ann-sub">@item.SubTitle</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

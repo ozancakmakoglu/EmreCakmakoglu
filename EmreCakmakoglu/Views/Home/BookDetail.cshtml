@@ -14,12 +14,25 @@
 
     <div class="row g-5 align-items-start justify-content-center mt-2">
         
-        @* SOL: Kitap Görseli *@
-        <div class="col-lg-4 col-md-5 d-flex justify-content-center">
-            <div class="book-cover-3d shadow-lg">
-                <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title">
-            </div>
-        </div>
+@* SOL: Kitap Görseli ve Altındaki Buton *@
+<div class="col-lg-4 col-md-5 d-flex flex-column align-items-center">
+    
+    @* Kitap Görseli *@
+    <div class="book-cover-3d shadow-lg mb-4">
+        <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Title">
+    </div>
+
+    @* AKSİYON BUTONLARI *@
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+        @if (!string.IsNullOrEmpty(Model.BuyLink))
+        {
+            <a href="@Model.BuyLink" target="_blank" class="btn btn-buy-now shadow-glow px-4 py-2">
+                <i class="bi bi-cart3 me-2"></i> İNCELE & SATIN AL
+            </a>
+        }
+    </div>
+    
+</div>
 
         @* SAĞ: Kitap İçeriği *@
         <div class="col-lg-7 col-md-7">
@@ -40,12 +53,7 @@
 
             @* AKSİYON BUTONLARI *@
             <div class="d-flex flex-wrap align-items-center gap-4">
-                @if (!string.IsNullOrEmpty(Model.BuyLink))
-                {
-                    <a href="@Model.BuyLink" target="_blank" class="btn btn-buy-now shadow-glow">
-                        <i class="bi bi-cart3 me-2"></i> İNCELE & SATIN AL
-                    </a>
-                }
+
                 <a href="/" class="text-white-50 text-decoration-none hover-red-text small letter-spacing-1">
                     <i class="bi bi-chevron-left me-1"></i> ANA SAYFAYA DÖN
                 </a>

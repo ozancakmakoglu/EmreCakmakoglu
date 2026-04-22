@@ -25,7 +25,7 @@ namespace EmreCakmakoglu.Controllers
         {
             var musics = _context.Musics
                                  .OrderByDescending(m => m.Year)
-                                 .ThenByDescending(m => m.Id)
+                                 .ThenByDescending(m => m.Month)
                                  .Take(6)
                                  .ToList();
 
@@ -48,6 +48,7 @@ namespace EmreCakmakoglu.Controllers
         {
             var allMusic = _context.Musics
                                    .OrderByDescending(m => m.Year)
+                                   .ThenByDescending(m => m.Month)
                                    .ToList();
             return View(allMusic);
         }

@@ -74,5 +74,13 @@ using (var scope = app.Services.CreateScope())
 
     context.SaveChanges();
 }
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    // Sunucudaki DB'de eksik olan sütunları (Month gibi) otomatik ekler, verileri silmez.
+    context.Database.Migrate();
+}
 
+app.Run();
 app.Run();

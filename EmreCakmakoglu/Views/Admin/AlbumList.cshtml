@@ -4,45 +4,133 @@
     ViewData["Title"] = "Albümler";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-white">Albümler</h2>
-    <a href="/Admin/AlbumCreate" class="btn btn-danger"><i class="bi bi-plus-lg me-2"></i>Yeni Albüm</a>
-</div>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="playfair fw-bold text-white mb-1">FOTOĞRAF ALBÜMLERİ</h2>
+            <p class="text-white-50 small letter-spacing-2 m-0">Galerideki anıları ve çekimleri yönetin.</p>
+        </div>
+        <a href="/Admin/AlbumCreate" class="btn btn-danger btn-lg rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-2"></i>Yeni Albüm Oluştur
+        </a>
+    </div>
 
-<div class="admin-card p-4">
-    <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle">
-            <thead>
-                <tr>
-                    <th style="width: 100px;">Kapak</th>
-                    <th>Albüm Adı</th>
-                    <th>Açıklama</th>
-                    <th>Tarih</th>
-                    <th class="text-end">İşlemler</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            <img src="@item.CoverImageUrl" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
-                        </td>
-                        <td class="fw-bold">@item.Title</td>
-                        <td class="text-white-50 small">@item.Description</td>
-                        <td>@item.CreatedDate.ToString("dd.MM.yyyy")</td>
-                        <td class="text-end">
-                            @* Bu buton daha sonra albümün içine fotoğraf eklemek için kullanılacak *@
-                            <a href="/Admin/AlbumDetails/@item.Id" class="btn btn-sm btn-info me-2">
-                                <i class="bi bi-images me-1"></i> Fotoğraflar
-                            </a>
-                            <a href="/Admin/AlbumDelete/@item.Id" class="btn btn-sm btn-outline-danger" onclick="return confirm('Albümü silmek istediğine emin misin?')">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="admin-glass-panel p-4 shadow-lg">
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-images display-1 text-white-50 mb-3 opacity-25"></i>
+                <p class="text-white-50">Henüz hiç albüm oluşturulmamış.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle border-transparent">
+                    <thead>
+                        <tr class="text-white-50 small letter-spacing-1 border-bottom border-secondary">
+                            <th style="width: 80px;">KAPAK</th>
+                            <th>ALBÜM BİLGİLERİ</th>
+                            <th class="text-center">TARİH</th>
+                            <th class="text-end">EYLEMLER</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="album-row border-bottom border-white-5">
+                                <td>
+                                    <div class="album-cover-frame">
+                                        <img src="@item.CoverImageUrl" alt="@item.Title">
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6 class="text-white mb-1 fw-bold">@item.Title</h6>
+                                    <p class="text-white-50 small m-0 text-truncate" style="max-width: 300px;">
+                                        @item.Description
+                                    </p>
+                                </td>
+                                <td class="text-center text-white-50 small">
+                                    @item.CreatedDate.ToString("dd MMM yyyy")
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        @* FOTOĞRAFLARI YÖNET BUTONU *@
+                                        <a href="/Admin/AlbumDetails/@item.Id" class="btn btn-sm btn-info rounded-pill px-3">
+                                            <i class="bi bi-images me-1"></i> Fotoğraflar
+                                        </a>
+
+                                        @* SİLME FORMU (POST YÖNTEMİ) *@
+                                        <form asp-action="AlbumDelete" asp-route-id="@item.Id" method="post" 
+                                              onsubmit="return confirm('Bu albümü ve içindeki tüm fotoğrafları silmek istediğinize emin misiniz?')">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a href="/Admin/Index" class="text-white-50 text-decoration-none small hover-red-text">
+            <i class="bi bi-chevron-left me-1"></i> Panel Ana Sayfasına Dön
+        </a>
     </div>
 </div>
+
+<style>
+    .playfair { font-family: 'Playfair Display', serif; }
+    .letter-spacing-2 { letter-spacing: 2px; }
+    
+    /* CAM PANEL */
+    .admin-glass-panel {
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+    }
+
+    /* ALBÜM KAPAK ÇERÇEVESİ */
+    .album-cover-frame {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .album-cover-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* TABLO ÖZELLEŞTİRME */
+    .table { margin: 0; }
+    .table-dark { background: transparent; }
+    .album-row { transition: all 0.3s ease; }
+    .album-row:hover { background: rgba(255, 255, 255, 0.03); }
+    
+    .border-white-5 { border-color: rgba(255, 255, 255, 0.05) !important; }
+    
+    .btn-info {
+        background-color: #0dcaf0;
+        border: none;
+        color: #000;
+        font-weight: 600;
+    }
+    .btn-info:hover {
+        background-color: #31d2f2;
+        transform: translateY(-2px);
+    }
+
+    .hover-red-text:hover { color: #ff4d4d !important; }
+</style>

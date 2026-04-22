@@ -2,163 +2,152 @@
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext _context
 @{
-    // Menü tablosundan başlığı dinamik çekiyoruz
-    var menuTitle = _context.Menus.FirstOrDefault(m => m.Url == "/Home/Contact")?.Title ?? "İLETİŞİM";
-    ViewData["Title"] = menuTitle.ToUpper(); 
-
-    // Sosyal medya linkleri için ayarları çekiyoruz
     var settings = _context.SiteSettings.AsNoTracking().FirstOrDefault();
 }
 
 <div class="container internal-page-wrapper">
-    
-    @* STANDART BAŞLIK YAPISI *@
     <div class="text-center">
-        <h1 class="page-standard-title">@ViewData["Title"]</h1>
+        <h1 class="page-standard-title">İLETİŞİM</h1>
         <div class="title-separator"></div>
     </div>
 
     <div class="row justify-content-center mt-5">
-        <div class="col-lg-6 col-md-8">
-            
-            @* OKUNABİLİRLİK PANELİ (GLASS) *@
-            <div class="contact-glass-panel p-5 shadow-lg text-center">
+        <div class="col-lg-5 col-md-8">
+            <div class="contact-glass-card">
                 
-                @* E-Posta Bölümü *@
-                <div class="contact-section mb-5">
-                    <h6 class="text-danger small letter-spacing-2 mb-4">E-POSTA</h6>
-                    <div class="email-reveal-wrapper">
-                        <a href="javascript:void(0)" 
-                           id="contactEmailLink" 
-                           class="text-white text-decoration-none fw-bold playfair"
-                           onclick="revealContactEmail()">
-                           Görmek İçin Tıklayın
-                        </a>
+                @* E-POSTA BÖLÜMÜ *@
+                <div class="contact-item">
+                    <span class="contact-label">E-POSTA</span>
+                    
+                    @* Burası boş gelir, botlar hiçbir şey okuyamaz *@
+                    <div id="email-placeholder" class="email-secure-wrapper" onclick="revealAndCopy()">
+                        <i class="bi bi-shield-lock-fill me-2 opacity-50"></i>
+                        <span id="secure-text">E-Posta için tıkla</span>
                     </div>
+                    
+                    @* Kopyalandı Balonu *@
+                    <span class="copy-success" id="copySuccess">Adres Kopyalandı!</span>
                 </div>
 
-                @* Sosyal Medya Bölümü *@
-                <div class="contact-section">
-                    <h6 class="text-danger small letter-spacing-2 mb-4">SOSYAL MEDYA</h6>
-                    <div class="d-flex justify-content-center gap-4">
-                        @if (!string.IsNullOrEmpty(settings?.InstagramUrl))
-                        {
-                            <a href="@settings.InstagramUrl" target="_blank" class="social-contact-icon">
-                                <i class="bi bi-instagram"></i>
-                            </a>
+                <div class="item-divider"></div>
+
+                @* SOSYAL MEDYA *@
+                <div class="contact-item">
+                    <span class="contact-label">SOSYAL MEDYA</span>
+                    <div class="social-links-row">
+                        @if (!string.IsNullOrEmpty(settings?.InstagramUrl)) {
+                            <a href="@settings.InstagramUrl" target="_blank" class="social-mini-link"><i class="bi bi-instagram"></i></a>
                         }
-                        @if (!string.IsNullOrEmpty(settings?.SpotifyArtistUrl))
-                        {
-                            <a href="@settings.SpotifyArtistUrl" target="_blank" class="social-contact-icon">
-                                <i class="bi bi-spotify"></i>
-                            </a>
+                        @if (!string.IsNullOrEmpty(settings?.SpotifyArtistUrl)) {
+                            <a href="@settings.SpotifyArtistUrl" target="_blank" class="social-mini-link"><i class="bi bi-spotify"></i></a>
                         }
-                        @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl))
-                        {
-                            <a href="@settings.YoutubeChannelUrl" target="_blank" class="social-contact-icon">
-                                <i class="bi bi-youtube"></i>
-                            </a>
+                        @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl)) {
+                            <a href="@settings.YoutubeChannelUrl" target="_blank" class="social-mini-link"><i class="bi bi-youtube"></i></a>
                         }
-                        @if (!string.IsNullOrEmpty(settings?.TwitterUrl))
-                        {
-                            <a href="@settings.TwitterUrl" target="_blank" class="social-contact-icon">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
+                        @if (!string.IsNullOrEmpty(settings?.TwitterUrl)) {
+                            <a href="@settings.TwitterUrl" target="_blank" class="social-mini-link"><i class="bi bi-twitter-x"></i></a>
                         }
                     </div>
                 </div>
             </div>
 
-            @* Alt Dönüş Linki *@
             <div class="text-center mt-5">
-                <a href="/" class="text-white-50 text-decoration-none small hover-red-text letter-spacing-1">
-                    <i class="bi bi-chevron-left me-1"></i> ANA SAYFAYA DÖN
-                </a>
+                <a href="/" class="back-link"><i class="bi bi-arrow-left"></i> ANA SAYFA</a>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    /* STANDART SAYFA DÜZENİ */
-    .internal-page-wrapper {
-        padding-top: 100px;
-        padding-bottom: 80px;
-    }
+    .internal-page-wrapper { padding-top: 120px; padding-bottom: 80px; }
+    .page-standard-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
+    .title-separator { width: 40px; height: 2px; background: #ff4d4d; margin: 15px auto 40px; }
 
-    .page-standard-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 3.5rem;
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-    }
-
-    .title-separator {
-        width: 60px;
-        height: 3px;
-        background-color: #8B261D;
-        margin: 0 auto 20px auto;
-    }
-
-    /* İLETİŞİM PANELİ (GLASS) */
-    .contact-glass-panel {
-        background: rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(15px);
+    .contact-glass-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 20px;
+        border-radius: 30px;
+        padding: 50px 40px;
+        text-align: center;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     }
 
-    #contactEmailLink { 
-        font-size: 1.6rem; 
-        transition: 0.3s; 
-        cursor: pointer; 
-        color: rgba(255,255,255,0.9) !important;
+    .contact-label { 
+        display: block; font-size: 0.7rem; font-weight: 800; 
+        color: rgba(255,255,255,0.4); letter-spacing: 4px; margin-bottom: 20px; 
     }
-    #contactEmailLink:hover { color: #ff4d4d !important; }
 
-    .social-contact-icon {
-        width: 55px;
-        height: 55px;
-        display: flex;
+    /* GÜVENLİ E-POSTA BUTONU */
+    .email-secure-wrapper {
+        display: inline-flex;
         align-items: center;
-        justify-content: center;
+        padding: 12px 30px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        color: rgba(255, 255, 255, 0.7) !important;
-        font-size: 1.4rem;
-        transition: all 0.4s ease;
+        border-radius: 100px;
+        color: #fff;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
     }
 
-    .social-contact-icon:hover {
-        background: rgba(139, 38, 29, 0.2);
-        border-color: #8B261D;
-        color: #ff4d4d !important;
-        transform: translateY(-5px);
+    .email-secure-wrapper:hover {
+        background: rgba(255, 77, 77, 0.1);
+        border-color: rgba(255, 77, 77, 0.3);
+        transform: translateY(-2px);
     }
 
-    .playfair { font-family: 'Playfair Display', serif; }
-    .letter-spacing-2 { letter-spacing: 2px; }
-    .hover-red-text:hover { color: #ff4d4d !important; }
-
-    @@media (max-width: 768px) {
-        .page-standard-title { font-size: 2.5rem; }
-        .internal-page-wrapper { padding-top: 60px; }
-        #contactEmailLink { font-size: 1.2rem; }
+    .email-secure-wrapper.revealed {
+        background: transparent;
+        border-color: transparent;
+        cursor: text;
+        font-size: 1.5rem;
     }
+
+    /* BAŞARI MESAJI */
+    .copy-success {
+        display: block; font-size: 0.7rem; color: #ff4d4d; 
+        margin-top: 10px; opacity: 0; transition: 0.3s;
+    }
+    .copy-success.show { opacity: 1; }
+
+    .item-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 30px auto; width: 30%; }
+
+    .social-links-row { display: flex; justify-content: center; gap: 25px; }
+    .social-mini-link { font-size: 1.6rem; color: rgba(255,255,255,0.4) !important; transition: 0.3s; }
+    .social-mini-link:hover { color: #ff4d4d !important; transform: scale(1.2); }
+
+    .back-link { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; }
+    .back-link:hover { color: #fff; }
 </style>
 
 <script>
-    function revealContactEmail() {
-        var user = "emrecakmakoglu";
-        var domain = "gmail.com";
-        var fullEmail = user + "@@" + domain;
+    function revealAndCopy() {
+        // E-posta parçalanmış halde, botlar bunu birleştiremez
+        var p1 = "emrecakmakoglu";
+        var p2 = "gmail";
+        var p3 = ".com";
+        var fullEmail = p1 + "@@" + p2 + p3;
 
-        var emailLink = document.getElementById("contactEmailLink");
-        emailLink.innerHTML = fullEmail;
-        emailLink.href = "mailto:" + fullEmail;
-        emailLink.onclick = null;
+        var wrapper = document.getElementById("email-placeholder");
+        var text = document.getElementById("secure-text");
+        var success = document.getElementById("copySuccess");
+
+        // 1. Adresi göster
+        text.innerText = fullEmail;
+        wrapper.classList.add("revealed");
+        wrapper.onclick = null; // Tekrar tıklamayı deaktive et
+
+        // 2. Panoya kopyala
+        navigator.clipboard.writeText(fullEmail).then(function() {
+            success.classList.add("show");
+            setTimeout(function() {
+                success.classList.remove("show");
+            }, 3000);
+        });
     }
 </script>

@@ -2,16 +2,20 @@
 @inject AppDbContext _context
 @model IEnumerable<EmreCakmakoglu.Models.Music>
 @{
-    // Menü tablosundan dinamik başlığı çekiyoruz (Hakkımda'daki gibi)
-    var menuTitle = _context.Menus.FirstOrDefault(m => m.Url == "/Home/Music")?.Title ?? "DİSKOGRAFİ";
+    // Tarayıcı sekmesi için yine menüden "Müzik" ismini çekiyoruz
+    var menuTitle = _context.Menus.FirstOrDefault(m => m.Url == "/Home/Music")?.Title ?? "MÜZİK";
     ViewData["Title"] = menuTitle.ToUpper(); 
+    
+    // Sayfa içinde görünecek özel başlık
+    var pageHeading = "DİSKOGRAFİ"; 
 }
 
 <div class="container internal-page-wrapper">
     
     @* STANDART BAŞLIK YAPISI *@
     <div class="text-center">
-        <h1 class="page-standard-title">@ViewData["Title"]</h1>
+        @* Burada ViewData["Title"] yerine özel pageHeading değişkenini kullanıyoruz *@
+        <h1 class="page-standard-title">@pageHeading</h1>
         <div class="title-separator"></div>
     </div>
 

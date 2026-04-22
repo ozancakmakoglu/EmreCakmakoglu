@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Title { get; set; } // Şarkı/Albüm Adı
         public string Year { get; set; }  // Çıkış Yılı (Örn: 2019)
+        public int Month { get; set; } // Yeni eklenecek alan (1-12 arası)
         public string? MusicType { get; set; } // Single, Albüm, EP gibi değerleri tutacak
         public string ImageUrl { get; set; } // Kapak Görseli Yolu
         public string? SpotifyUrl { get; set; } // Soru işareti boş bırakılabilir olmasını sağlar

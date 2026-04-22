@@ -1,81 +1,149 @@
 ﻿@{
     Layout = "_Layout";
-    ViewData["Title"] = "Yönetim Paneli";
+    ViewData["Title"] = "Panel";
 }
 
-<div class="container-fluid">
-    <div class="row g-4">
-        @* 1. DİSKOGRAFİ YÖNETİMİ *@
-        <div class="col-md-4">
-            <div class="admin-card text-center p-5 shadow-lg">
-                <i class="bi bi-music-note-beamed display-3 text-danger mb-3"></i>
-                <h4 class="text-white mb-4">DİSKOGRAFİ</h4>
-                <p class="text-white-50 small mb-4">Müzik eserlerini ekle, düzenle veya kaldır.</p>
-                <a href="/Admin/MusicList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
-            </div>
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="playfair fw-bold text-white mb-2">YÖNETİM MERKEZİ</h2>
+            <p class="text-white-50 small letter-spacing-2">Sitenin tüm dinamik alanlarını buradan kontrol edin.</p>
+            <div class="mx-auto mt-3" style="width: 40px; height: 2px; background: #8B261D;"></div>
         </div>
-
-        @* 2. BLOG YÖNETİMİ *@
-        <div class="col-md-4">
-            <div class="admin-card text-center p-5 shadow-lg">
-                <i class="bi bi-journal-text display-3 text-danger mb-3"></i>
-                <h4 class="text-white mb-4">BLOG YAZILARI</h4>
-                <p class="text-white-50 small mb-4">Yazılarını ve makalelerini buradan yönet.</p>
-                <a href="/Admin/BlogList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
-            </div>
-        </div>
-
-        @* 3. GALERİ YÖNETİMİ (Eski Mesajlar yerine gelen yeni kısım) *@
-        <div class="col-md-4">
-            <div class="admin-card text-center p-5 shadow-lg border-danger border-opacity-25">
-                <i class="bi bi-images display-3 text-danger mb-3"></i>
-                <h4 class="text-white mb-4">FOTO GALERİ</h4>
-                <p class="text-white-50 small mb-4">Fotoğraf albümleri oluştur ve anılarını paylaş.</p>
-                <a href="/Admin/AlbumList" class="btn btn-danger w-100 py-2">ALBÜMLERİ YÖNET</a>
-            </div>
-        </div>
-
-        @* 4. KİTAP YÖNETİMİ *@
-        <div class="col-md-4">
-            <div class="admin-card text-center p-5 shadow-lg">
-                <i class="bi bi-book display-3 text-danger mb-3"></i>
-                <h4 class="text-white mb-4">KİTAPLAR</h4>
-                <p class="text-white-50 small mb-4">Yayınlanmış kitaplarını sisteme ekle.</p>
-                <a href="/Admin/BookList" class="btn btn-outline-danger w-100 py-2">YÖNET</a>
-            </div>
-        </div>
-        @* 5. MENÜ YÖNETİMİ *@
-<div class="col-md-4">
-    <div class="admin-card text-center p-5 shadow-lg">
-        <i class="bi bi-list-ul display-3 text-danger mb-3"></i>
-        <h4 class="text-white mb-4">MENÜ YÖNETİMİ</h4>
-        <p class="text-white-50 small mb-4">Üst menüdeki başlıkları ve sıralamayı düzenle.</p>
-        <a href="/Admin/MenuList" class="btn btn-outline-danger w-100 py-2">DÜZENLE</a>
     </div>
+
+    <div class="row g-3">
+        <div class="col-12 mt-4 mb-2">
+            <span class="text-danger small fw-bold letter-spacing-1">İÇERİK YÖNETİMİ</span>
+        </div>
+
+        @* 1. HAKKIMDA *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/AboutEdit" class="minimal-card">
+                <i class="bi bi-person-badge"></i>
+                <h5>Hakkımda</h5>
+                <span>Biyografi ve Fotoğraf</span>
+            </a>
+        </div>
+
+        @* 2. DİSKOGRAFİ *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/MusicList" class="minimal-card">
+                <i class="bi bi-music-note-list"></i>
+                <h5>Diskografi</h5>
+                <span>Eserler ve Albümler</span>
+            </a>
+        </div>
+
+        @* 3. BLOG *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/BlogList" class="minimal-card">
+                <i class="bi bi-pen"></i>
+                <h5>Blog</h5>
+                <span>Yazılar ve Makaleler</span>
+            </a>
+        </div>
+
+@* 4. DUYURULAR (Galeri Yerine) *@
+<div class="col-md-4 col-lg-3">
+    <a href="/Admin/AnnouncementList" class="minimal-card">
+        <i class="bi bi-megaphone"></i>
+        <h5>Duyurular</h5>
+        <span>Haberler ve Etkinlikler</span>
+    </a>
 </div>
-        @* 6. SİTE AYARLARI *@
-        <div class="col-md-4">
-            <div class="admin-card text-center p-5 shadow-lg">
-                <i class="bi bi-gear display-3 text-danger mb-3"></i>
-                <h4 class="text-white mb-4">SİTE AYARLARI</h4>
-                <p class="text-white-50 small mb-4">Sosyal medya linkleri, tema ve hero görseli.</p>
-                <a href="/Admin/Settings" class="btn btn-outline-danger w-100 py-2">DÜZENLE</a>
-            </div>
+
+        @* 5. KİTAPLAR *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/BookList" class="minimal-card">
+                <i class="bi bi-book"></i>
+                <h5>Kitaplar</h5>
+                <span>Yayınlanmış Eserler</span>
+            </a>
+        </div>
+
+        <div class="col-12 mt-5 mb-2">
+            <span class="text-danger small fw-bold letter-spacing-1">SİSTEM VE AYARLAR</span>
+        </div>
+
+        @* 6. MENÜ *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/MenuList" class="minimal-card alt-style">
+                <i class="bi bi-ui-checks-grid"></i>
+                <h5>Menü Yapısı</h5>
+                <span>Navigasyon Düzenle</span>
+            </a>
+        </div>
+
+        @* 7. AYARLAR *@
+        <div class="col-md-4 col-lg-3">
+            <a href="/Admin/Settings" class="minimal-card alt-style">
+                <i class="bi bi-sliders"></i>
+                <h5>Site Ayarları</h5>
+                <span>Sosyal Medya & Genel</span>
+            </a>
         </div>
     </div>
 </div>
 
 <style>
-    .admin-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 20px;
-        transition: all 0.4s ease;
-    }
-    .admin-card:hover {
-        background: rgba(139, 38, 29, 0.05);
-        border-color: rgba(139, 38, 29, 0.3);
-        transform: translateY(-10px);
+    /* MİNİMALİST TASARIM DİLİ */
+    .playfair { font-family: 'Playfair Display', serif; }
+    .letter-spacing-1 { letter-spacing: 1px; }
+    .letter-spacing-2 { letter-spacing: 2px; }
+
+    /* DAHA OKUNAKLI MİNİMAL KARTLAR */
+.minimal-card {
+    display: block;
+    text-decoration: none !important;
+    /* Arka planı biraz daha koyulaştırdık (0.02 -> 0.15) */
+    background: rgba(0, 0, 0, 0.45); 
+    /* Bulanıklık etkisini artırdık (10px -> 20px) */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    /* Kenarlığı daha belirgin yaptık */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 35px 20px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.4s ease;
+    height: 100%;
+}
+
+.minimal-card i {
+    font-size: 2.2rem;
+    color: #ff4d4d; /* İkon rengini daha canlı bir kırmızıya çektik */
+    margin-bottom: 18px;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(139, 38, 29, 0.3));
+}
+
+.minimal-card h5 {
+    color: #ffffff;
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Yazıya derinlik ekledik */
+}
+
+.minimal-card span {
+    color: rgba(255, 255, 255, 0.65); /* Gri tonu biraz daha beyaza yaklaştırdık */
+    font-size: 0.8rem;
+    display: block;
+    font-weight: 300;
+}
+
+/* Hover'da kartın parlaması */
+.minimal-card:hover {
+    background: rgba(139, 38, 29, 0.3);
+    border-color: #8B261D;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+    /* Sistem Ayarları İçin Hafif Farklı Stil */
+    .alt-style {
+        background: rgba(255, 255, 255, 0.01);
     }
 </style>

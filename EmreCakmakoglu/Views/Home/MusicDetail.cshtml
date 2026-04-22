@@ -9,16 +9,12 @@
         <div class="col-12">
             <h1 class="display-3 fw-bold main-title text-white mb-2">@Model.Title</h1>
             <div class="sub-header d-flex justify-content-center align-items-center gap-3">
-                <span class="text-danger fw-bold letter-spacing-2">@Model.Year</span>
+                <span class="text-danger fw-bold letter-spacing-2">@Model.Year - @Model.MusicType</span>
                 <span class="music-divider"></span>
             </div>
         </div>
     </div>
-    <div class="sub-header d-flex justify-content-center align-items-center gap-3">
-    <span class="text-danger fw-bold letter-spacing-2">@Model.Year</span>
-    <span class="music-divider"></span>
-    <span class="text-white-50 text-uppercase small letter-spacing-2">@Model.MusicType</span>
-</div>
+
     @* Ana İçerik *@
     <div class="row g-5 align-items-start justify-content-center">
         
@@ -33,10 +29,7 @@
         @* SAĞ: Şarkı Sözleri Paneli *@
         <div class="col-md-7 col-lg-6">
             <div class="lyrics-panel shadow-lg">
-                <div class="panel-header d-flex align-items-center mb-4">
-                    <div class="red-line me-3"></div>
-                    <h6 class="text-uppercase text-white-50 m-0 letter-spacing-2">Şarkı Hakkında & Sözler</h6>
-                </div>
+
 
                 <div class="lyrics-text">
                     @Html.Raw(Model.Description)
