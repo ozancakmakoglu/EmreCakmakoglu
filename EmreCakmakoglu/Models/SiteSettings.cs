@@ -25,6 +25,10 @@ namespace EmreCakmakoglu.Models
         public string? TwitterUrl { get; set; }
         public string? YoutubeChannelUrl { get; set; }
         public string? SpotifyArtistUrl { get; set; }
+        public string? BlueSkyUrl { get; set; }
+        public string? FacebookUrl { get; set; }
+        public string? YouTubeMusicUrl { get; set; }
+        public string? XUrl { get; set; }
 
         // Alt Kısım Metni
         public string? FooterText { get; set; }

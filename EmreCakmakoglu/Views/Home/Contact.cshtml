@@ -6,148 +6,199 @@
 }
 
 <div class="container internal-page-wrapper">
+    @* BAŞLIK *@
     <div class="text-center">
         <h1 class="page-standard-title">İLETİŞİM</h1>
         <div class="title-separator"></div>
     </div>
 
-    <div class="row justify-content-center mt-5">
+    @* İÇERİK KARTI *@
+    <div class="row justify-content-center mt-4">
         <div class="col-lg-5 col-md-8">
             <div class="contact-glass-card">
                 
-                @* E-POSTA BÖLÜMÜ *@
+                @* 1. BÖLÜM: E-POSTA *@
                 <div class="contact-item">
-                    <span class="contact-label">E-POSTA</span>
+                    <span class="contact-label">DOĞRUDAN İLETİŞİM</span>
                     
-                    @* Burası boş gelir, botlar hiçbir şey okuyamaz *@
-                    <div id="email-placeholder" class="email-secure-wrapper" onclick="revealAndCopy()">
-                        <i class="bi bi-shield-lock-fill me-2 opacity-50"></i>
-                        <span id="secure-text">E-Posta için tıkla</span>
+                    @* Mesajın yanda çıkmaması için buton grubunu d-block içine aldık *@
+                    <div class="d-block">
+                        <div id="email-placeholder" class="email-secure-wrapper" onclick="revealAndCopy()">
+                            <i class="bi bi-shield-lock-fill me-2 opacity-50"></i>
+                            <span id="secure-text">E-Posta Gönder</span>
+                        </div>
                     </div>
                     
-                    @* Kopyalandı Balonu *@
+                    @* Başarı Mesajı (Başlangıçta display:none ile gizli) *@
                     <span class="copy-success" id="copySuccess">Adres Kopyalandı!</span>
                 </div>
 
                 <div class="item-divider"></div>
 
-                @* SOSYAL MEDYA *@
+                @* 2. BÖLÜM: MÜZİK PLATFORMLARI *@
                 <div class="contact-item">
-                    <span class="contact-label">SOSYAL MEDYA</span>
+                    <span class="contact-label">MÜZİK PLATFORMLARI</span>
                     <div class="social-links-row">
-                        @if (!string.IsNullOrEmpty(settings?.InstagramUrl)) {
-                            <a href="@settings.InstagramUrl" target="_blank" class="social-mini-link"><i class="bi bi-instagram"></i></a>
-                        }
                         @if (!string.IsNullOrEmpty(settings?.SpotifyArtistUrl)) {
-                            <a href="@settings.SpotifyArtistUrl" target="_blank" class="social-mini-link"><i class="bi bi-spotify"></i></a>
+                            <a href="@settings.SpotifyArtistUrl" target="_blank" class="social-mini-link spotify-hover" title="Spotify"><i class="bi bi-spotify"></i></a>
                         }
-                        @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl)) {
-                            <a href="@settings.YoutubeChannelUrl" target="_blank" class="social-mini-link"><i class="bi bi-youtube"></i></a>
+                        @if (!string.IsNullOrEmpty(settings?.YouTubeMusicUrl)) {
+                            <a href="@settings.YouTubeMusicUrl" target="_blank" class="social-mini-link yt-music-hover" title="YouTube Music"><i class="bi bi-play-circle-fill"></i></a>
                         }
                         @if (!string.IsNullOrEmpty(settings?.TwitterUrl)) {
-                            <a href="@settings.TwitterUrl" target="_blank" class="social-mini-link"><i class="bi bi-twitter-x"></i></a>
+                            <a href="@settings.TwitterUrl" target="_blank" class="social-mini-link apple-hover" title="Apple Music"><i class="bi bi-apple"></i></a>
+                        }
+                    </div>
+                </div>
+
+                <div class="item-divider-small"></div>
+
+                @* 3. BÖLÜM: SOSYAL MEDYA *@
+                <div class="contact-item">
+                    <span class="contact-label">SOSYAL MEDYA</span>
+                    <div class="social-links-row secondary-socials">
+                        @if (!string.IsNullOrEmpty(settings?.InstagramUrl)) {
+                            <a href="@settings.InstagramUrl" target="_blank" class="social-mini-link instagram-hover" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.YoutubeChannelUrl)) {
+                            <a href="@settings.YoutubeChannelUrl" target="_blank" class="social-mini-link youtube-hover" title="YouTube"><i class="bi bi-youtube"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.FacebookUrl)) {
+                            <a href="@settings.FacebookUrl" target="_blank" class="social-mini-link facebook-hover" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.XUrl)) {
+                            <a href="@settings.XUrl" target="_blank" class="social-mini-link x-hover" title="X"><i class="bi bi-twitter-x"></i></a>
+                        }
+                        @if (!string.IsNullOrEmpty(settings?.BlueSkyUrl)) {
+                            <a href="@settings.BlueSkyUrl" target="_blank" class="social-mini-link bluesky-hover" title="BlueSky">
+                                @* BlueSky Kelebek Logosu (SVG) *@
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 512 512" style="vertical-align: -0.125em;">
+                                    <path d="M111.8 62.2C170.2 105.9 226.5 160.7 256 194.2c29.5-33.5 85.8-88.3 144.2-132c38.5-28.7 111.8-70.1 111.8 17.5c0 8.2-4 133.2-6.3 145.4c-12.2 65.5-80.1 81.3-138.2 72.9c75.2 12.1 144.1 41.5 90.6 116.5c-30.8 43.2-83.6 18.2-126.8-19.1c-28.5-24.6-51-60.8-65.3-84.3c-14.3 23.5-36.8 59.7-65.3 84.3c-43.2 37.3-96 62.3-126.8 19.1c-53.5-75 15.4-104.4 90.6-116.5c-58.1 8.4-125.9-7.4-138.2-72.9C4 212.9 0 87.9 0 79.7C0 7.9 73.3 49.3 111.8 62.2z"/>
+                                </svg>
+                            </a>
                         }
                     </div>
                 </div>
             </div>
 
-            <div class="text-center mt-5">
-                <a href="/" class="back-link"><i class="bi bi-arrow-left"></i> ANA SAYFA</a>
+            <div class="text-center mt-4">
+                <a href="/" class="back-link"><i class="bi bi-arrow-left"></i> ANA SAYFAYA DÖN</a>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-    .internal-page-wrapper { padding-top: 120px; padding-bottom: 80px; }
-    .page-standard-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #fff; letter-spacing: 2px; }
-    .title-separator { width: 40px; height: 2px; background: #ff4d4d; margin: 15px auto 40px; }
+    /* GENEL DÜZEN */
+    .internal-page-wrapper { padding-top: 100px; padding-bottom: 60px; }
+    .page-standard-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #fff; letter-spacing: 2px; margin-bottom: 5px; }
+    .title-separator { width: 40px; height: 2px; background: #ff4d4d; margin: 10px auto 20px; }
 
     .contact-glass-card {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+        background: rgba(255, 255, 255, 0.01);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 30px;
-        padding: 50px 40px;
+        border-radius: 35px;
+        padding: 45px 40px;
         text-align: center;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        box-shadow: 0 40px 100px rgba(0,0,0,0.6);
     }
 
     .contact-label { 
-        display: block; font-size: 0.7rem; font-weight: 800; 
-        color: rgba(255,255,255,0.4); letter-spacing: 4px; margin-bottom: 20px; 
+        display: block; font-size: 0.65rem; font-weight: 800; 
+        color: rgba(255,255,255,0.3); letter-spacing: 3px; margin-bottom: 15px; 
     }
 
-    /* GÜVENLİ E-POSTA BUTONU */
+    /* E-POSTA BUTONU */
     .email-secure-wrapper {
         display: inline-flex;
         align-items: center;
         padding: 12px 30px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 100px;
         color: #fff;
         font-family: 'Playfair Display', serif;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         cursor: pointer;
         transition: all 0.3s ease;
-        position: relative;
+    }
+    .email-secure-wrapper:hover { background: rgba(255, 77, 77, 0.1); border-color: #ff4d4d; transform: translateY(-2px); }
+    .email-secure-wrapper.revealed { background: transparent; border-color: transparent; cursor: text; font-size: 1.3rem; }
+
+    /* BAŞARI MESAJI - HAYALET GÖRÜNTÜYÜ ENGELLEYEN KISIM */
+    .copy-success { 
+        display: none; /* Başlangıçta tamamen yok */
+        font-size: 0.8rem; 
+        color: #ff4d4d !important; 
+        margin-top: 12px; 
+        font-weight: 600;
+        letter-spacing: 1px;
+        animation: fadeInDown 0.4s ease forwards;
+    }
+    .copy-success.show { display: block; } /* JS tetikleyince blok olarak göster */
+
+    @@keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    .email-secure-wrapper:hover {
-        background: rgba(255, 77, 77, 0.1);
-        border-color: rgba(255, 77, 77, 0.3);
-        transform: translateY(-2px);
+    /* AYRAÇLAR */
+    .item-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 30px auto; width: 80%; }
+    .item-divider-small { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); margin: 20px auto; width: 50%; }
+
+    /* SOSYAL LİNKLER */
+    .social-links-row { display: flex; justify-content: center; gap: 25px; align-items: center; }
+    .social-mini-link { font-size: 1.7rem; color: rgba(255,255,255,0.4) !important; transition: all 0.3s ease; display: flex; align-items: center; }
+    
+    /* BlueSky SVG Boyutu */
+    .social-mini-link svg { width: 1.6rem; height: 1.6rem; }
+
+    /* HOVER RENKLERİ */
+    .spotify-hover:hover { color: #1DB954 !important; }
+    .youtube-hover:hover { color: #FF0000 !important; }
+    .yt-music-hover:hover { color: #FF0000 !important; }
+    .apple-hover:hover { color: #FC3C44 !important; }
+    .instagram-hover:hover { color: #E1306C !important; }
+    .bluesky-hover:hover { color: #0085ff !important; }
+    .facebook-hover:hover { color: #1877F2 !important; }
+    .x-hover:hover { color: #ffffff !important; }
+
+    .secondary-socials .social-mini-link { font-size: 1.3rem; }
+    .secondary-socials .social-mini-link svg { width: 1.2rem; height: 1.2rem; }
+
+    .back-link { color: rgba(255,255,255,0.25); text-decoration: none; font-size: 0.7rem; letter-spacing: 2px; }
+
+    /* MOBİL SIKIŞTIRMA */
+    @@media (max-width: 768px) {
+        .internal-page-wrapper { padding-top: 50px; }
+        .page-standard-title { font-size: 2rem; }
+        .contact-glass-card { padding: 30px 20px; border-radius: 25px; }
+        .social-links-row { gap: 15px; }
     }
-
-    .email-secure-wrapper.revealed {
-        background: transparent;
-        border-color: transparent;
-        cursor: text;
-        font-size: 1.5rem;
-    }
-
-    /* BAŞARI MESAJI */
-    .copy-success {
-        display: block; font-size: 0.7rem; color: #ff4d4d; 
-        margin-top: 10px; opacity: 0; transition: 0.3s;
-    }
-    .copy-success.show { opacity: 1; }
-
-    .item-divider { height: 1px; background: rgba(255,255,255,0.05); margin: 30px auto; width: 30%; }
-
-    .social-links-row { display: flex; justify-content: center; gap: 25px; }
-    .social-mini-link { font-size: 1.6rem; color: rgba(255,255,255,0.4) !important; transition: 0.3s; }
-    .social-mini-link:hover { color: #ff4d4d !important; transform: scale(1.2); }
-
-    .back-link { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; }
-    .back-link:hover { color: #fff; }
 </style>
 
 <script>
     function revealAndCopy() {
-        // E-posta parçalanmış halde, botlar bunu birleştiremez
         var p1 = "emrecakmakoglu";
         var p2 = "gmail";
         var p3 = ".com";
         var fullEmail = p1 + "@@" + p2 + p3;
-
         var wrapper = document.getElementById("email-placeholder");
         var text = document.getElementById("secure-text");
         var success = document.getElementById("copySuccess");
 
-        // 1. Adresi göster
+        // 1. Metni göster
         text.innerText = fullEmail;
         wrapper.classList.add("revealed");
-        wrapper.onclick = null; // Tekrar tıklamayı deaktive et
+        wrapper.onclick = null;
 
-        // 2. Panoya kopyala
+        // 2. Kopyala ve Mesajı Göster
         navigator.clipboard.writeText(fullEmail).then(function() {
             success.classList.add("show");
-            setTimeout(function() {
-                success.classList.remove("show");
-            }, 3000);
+            // 3 saniye sonra mesajı gizle (opsiyonel)
+            setTimeout(function() { success.classList.remove("show"); }, 3000);
         });
     }
 </script>

@@ -3,6 +3,7 @@ using System;
 using EmreCakmakoglu.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmreCakmakoglu.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260427055112_AddNewSocialLinks")]
+    partial class AddNewSocialLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
@@ -315,9 +318,6 @@ namespace EmreCakmakoglu.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("TwitterUrl")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("XUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("YouTubeMusicUrl")

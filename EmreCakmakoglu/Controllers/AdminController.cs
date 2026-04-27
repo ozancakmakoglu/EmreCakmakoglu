@@ -182,6 +182,7 @@ namespace EmreCakmakoglu.Controllers
             existing.YoutubeUrl = music.YoutubeUrl;
             existing.AppleMusicUrl = music.AppleMusicUrl;
             existing.Description = music.Description;
+
             _context.SaveChanges();
             return RedirectToAction("MusicList");
         }
@@ -200,7 +201,7 @@ namespace EmreCakmakoglu.Controllers
             return RedirectToAction("MusicList");
         }
 
-        // --- KİTAP İŞLEMLERİ (Senin Modeline Göre) ---
+        // --- KİTAP İŞLEMLERİ ---
         public IActionResult BookList()
         {
             if (!IsAdmin()) return RedirectToAction("Login");
@@ -392,7 +393,7 @@ namespace EmreCakmakoglu.Controllers
             return RedirectToAction("AnnouncementList");
         }
 
-        // --- ALBÜM VE AYARLAR ---
+        // --- ALBÜM İŞLEMLERİ ---
         public IActionResult AlbumList()
         {
             if (!IsAdmin()) return RedirectToAction("Login");
@@ -449,7 +450,7 @@ namespace EmreCakmakoglu.Controllers
             return View(model);
         }
 
-        // --- AYARLAR (SAYFAYI AÇAR) ---
+        // --- AYARLAR ---
         public IActionResult Settings()
         {
             if (!IsAdmin()) return RedirectToAction("Login");
@@ -457,7 +458,6 @@ namespace EmreCakmakoglu.Controllers
             var settings = _context.SiteSettings.FirstOrDefault();
             if (settings == null)
             {
-                // Veritabanında hiç ayar yoksa varsayılan bir tane oluşturur
                 settings = new SiteSettings { ActiveTheme = "site.css" };
                 _context.SiteSettings.Add(settings);
                 _context.SaveChanges();
@@ -465,7 +465,6 @@ namespace EmreCakmakoglu.Controllers
             return View(settings);
         }
 
-        // --- AYARLAR (KAYDEDER VE GÖRSEL YÜKLER) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Settings(SiteSettings model, IFormFile? heroImageFile)
@@ -475,31 +474,33 @@ namespace EmreCakmakoglu.Controllers
             var existing = await _context.SiteSettings.FirstOrDefaultAsync(x => x.Id == model.Id);
             if (existing != null)
             {
-                // 1. GÖRSEL YÜKLEME (Hero Image)
                 if (heroImageFile != null && heroImageFile.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(heroImageFile.FileName);
                     var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads/settings");
-
                     if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
-
                     var filePath = Path.Combine(folderPath, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await heroImageFile.CopyToAsync(stream);
                     }
-                    // Veritabanına yeni yolu kaydet
                     existing.HeroImageUrl = "/uploads/settings/" + fileName;
                 }
 
-                // 2. DİĞER ALANLARI GÜNCELLE
+                // DİĞER ALANLARIN GÜNCELLEMESİ
                 existing.ActiveTheme = model.ActiveTheme;
                 existing.YoutubeVideoId = model.YoutubeVideoId;
                 existing.SpotifyEmbedUrl = model.SpotifyEmbedUrl;
                 existing.InstagramUrl = model.InstagramUrl;
-                existing.TwitterUrl = model.TwitterUrl; // Apple Music için kullandığın alan
+                existing.TwitterUrl = model.TwitterUrl;
                 existing.YoutubeChannelUrl = model.YoutubeChannelUrl;
                 existing.SpotifyArtistUrl = model.SpotifyArtistUrl;
+
+                // --- YENİ EKLENEN SOSYAL MEDYA ALANLARI ---
+                existing.BlueSkyUrl = model.BlueSkyUrl;
+                existing.FacebookUrl = model.FacebookUrl;
+                existing.YouTubeMusicUrl = model.YouTubeMusicUrl;
+                existing.XUrl = model.XUrl; // YENİ EKLENEN SATIR
 
                 _context.Update(existing);
                 await _context.SaveChangesAsync();
@@ -525,21 +526,19 @@ namespace EmreCakmakoglu.Controllers
             }
             return RedirectToAction("Settings");
         }
-        // --- DUYURU DÜZENLEME SAYFASINI AÇAR (GET) ---
+
+        // --- DUYURU DÜZENLEME (GET) ---
         [HttpGet]
         public async Task<IActionResult> AnnouncementEdit(int id)
         {
             if (!IsAdmin()) return RedirectToAction("Login");
 
             var announcement = await _context.Announcements.FindAsync(id);
-            if (announcement == null)
-            {
-                return NotFound();
-            }
+            if (announcement == null) return NotFound();
             return View(announcement);
         }
 
-        // --- DUYURU DÜZENLEME KAYDINI YAPAR (POST) ---
+        // --- DUYURU DÜZENLEME (POST) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AnnouncementEdit(Announcement announcement)
