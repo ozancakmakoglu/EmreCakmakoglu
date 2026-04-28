@@ -51,7 +51,7 @@
                             @* HTML ETİKETLERİNDEN ARINDIRILMIŞ ÖZET *@
                             <p class="archive-summary">
                                 @{
-                                    // Önce HTML etiketlerini (p, br, strong vb.) tamamen siliyoruz
+                                    // Önce HTML etiketlerini tamamen siliyoruz
                                     var rawSummary = post.Summary ?? "";
                                     var cleanSummary = System.Text.RegularExpressions.Regex.Replace(rawSummary, "<.*?>", String.Empty);
 
@@ -112,6 +112,7 @@
         transition: all 0.4s ease;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         padding-bottom: 2rem;
+        border-radius: 12px;
     }
 
     .archive-blog-item:last-child { border-bottom: none; }
@@ -120,7 +121,7 @@
         position: relative;
         overflow: hidden;
         border-radius: 12px;
-        aspect-ratio: 1 / 1;
+        aspect-ratio: 1 / 1; /* Masaüstünde Kare */
         border: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -155,8 +156,19 @@
 
     .letter-spacing-2 { letter-spacing: 2px; }
 
+    /* MOBİL DÜZENLEMELERİ */
     @@media (max-width: 768px) {
         .page-standard-title { font-size: 2.5rem; }
-        .archive-img-frame { aspect-ratio: 16 / 9; margin-bottom: 15px; }
+        .internal-page-wrapper { padding-top: 60px; }
+        
+        /* Değişiklik Burada: 16/9 olan oranı kareye (1/1) çektik */
+        .archive-img-frame { 
+            aspect-ratio: 1 / 1; 
+            width: 100%;
+            margin-bottom: 10px; 
+        }
+        
+        .archive-summary { text-align: left; font-size: 0.95rem; }
+        .archive-title { font-size: 1.3rem; }
     }
 </style>
